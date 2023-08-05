@@ -15,6 +15,7 @@ class Design {
     private init() {}
 }
 
+// 아래 이미지 싱글톤 필요없을 듯???
 struct TamagotchiImageSingleton {
     static var shared = TamagotchiImageSingleton()
     

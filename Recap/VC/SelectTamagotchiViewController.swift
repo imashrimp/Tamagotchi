@@ -40,6 +40,10 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
     // alert 실행 시 클로저 사용해야함.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        // 여기서 타마고치의 이름이 ""이면
+        //레벨1: 화면전환 안되게
+        //레벨2: 타마고치 생성 화면으로 전환
+        
         let vc = storyboard?.instantiateViewController(identifier: "MainViewController") as! MainViewController
         let nav = UINavigationController(rootViewController: vc)
         
