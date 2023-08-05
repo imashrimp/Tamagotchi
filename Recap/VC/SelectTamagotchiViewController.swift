@@ -59,13 +59,16 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
 
 extension SelectTamagotchiViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return tamagotchiList.tamagotchi.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TamagotchiCollectionViewCell", for: indexPath) as! TamagotchiCollectionViewCell
         
-        cell.contentsConfigure(data: tamagotchiList.tamagochi[0])
+        cell.setTamagotchiImage(data: tamagotchiList.tamagotchi[indexPath.row])
+        print(tamagotchiList.tamagotchi[indexPath.row].name)
+        cell.labelSetting(data: tamagotchiList.tamagotchi[indexPath.row])
+//        print(tamagotchiList.tamagochi[indexPath.row].name)
         
         return cell
     }

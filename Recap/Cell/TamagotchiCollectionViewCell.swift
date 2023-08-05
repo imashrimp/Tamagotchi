@@ -12,30 +12,120 @@ import UIKit
 class TamagotchiCollectionViewCell: UICollectionViewCell, CollectionCellContentsConfigure {
     
 
-    @IBOutlet var tamagochiImage: UIImageView!
-    @IBOutlet var tamagochiNameLabel: UILabel!
+    @IBOutlet var tamagotchiImage: UIImageView!
+    @IBOutlet var tamagotchiNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        tamagochiImage.layer.cornerRadius = 15 // 변경 가능함
+        tamagotchiImage.layer.cornerRadius = 15
         
-        // image corner radius, 레이블 폰트 사이즈, 배경색, 테두리, numberOflines 같은걸 이미지 띄운 후에 설정해보자
-        tamagochiNameLabel.font = .systemFont(ofSize: 13)
-        tamagochiNameLabel.textColor = Design.shared.fontAndBorderColor
-        tamagochiNameLabel.clipsToBounds = true
-        tamagochiNameLabel.layer.cornerRadius = 5 // 변경 가능함
-        tamagochiNameLabel.layer.borderWidth = 3 // 변경 가능함
-        tamagochiNameLabel.layer.borderColor = Design.shared.fontAndBorderColor.cgColor
-        tamagochiNameLabel.numberOfLines = 0
-        tamagochiNameLabel.backgroundColor = Design.shared.backgroundColor
-        tamagochiNameLabel.textAlignment = .center
+        tamagotchiNameLabel.font = .systemFont(ofSize: 13)
+        tamagotchiNameLabel.textColor = Design.shared.fontAndBorderColor
+        tamagotchiNameLabel.clipsToBounds = true
+        tamagotchiNameLabel.layer.cornerRadius = 5
+        tamagotchiNameLabel.layer.borderWidth = 3
+        tamagotchiNameLabel.layer.borderColor = Design.shared.fontAndBorderColor.cgColor
+        tamagotchiNameLabel.numberOfLines = 0
+        tamagotchiNameLabel.backgroundColor = Design.shared.backgroundColor
+        tamagotchiNameLabel.textAlignment = .center
     }
 
-    func contentsConfigure(data: Tamagotchi) {
-        // 여기서 받아올 객체가 필요함.
-        tamagochiImage.image = UIImage(named: TamagotchiImageSingleton.shared.cactus.one)
-        tamagochiNameLabel.text = data.name
-//        tamagochiNameLabel.text =
+    func setTamagotchiImage(data: Tamagotchi) {
+
+        // 이거 cellForItemAt 마다 도는게 좀 무거울거 같음.
+        if data.type == .cactus {
+            switch data.level {
+            case 0..<1:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.one)
+            case 1..<2:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.one)
+            case 2..<3:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.two)
+            case 3..<4:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.three)
+            case 4..<5:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.four)
+            case 5..<6:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.five)
+            case 6..<7:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.six)
+            case 7..<8:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.seven)
+            case 8..<9:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.eight)
+            case 9..<10:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.nine)
+            case 10...:
+                return tamagotchiImage.image = UIImage(named: TamagotchiCactusImage.cactus.nine)
+            default:
+                return tamagotchiImage.image = UIImage(named: "noImage")
+            }
+        } else if data.type == .sun {
+            switch data.level {
+            case 0..<1:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.one)
+            case 1..<2:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.one)
+            case 2..<3:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.two)
+            case 3..<4:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.three)
+            case 4..<5:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.four)
+            case 5..<6:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.five)
+            case 6..<7:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.six)
+            case 7..<8:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.seven)
+            case 8..<9:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.eight)
+            case 9..<10:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.nine)
+            case 10...:
+                return tamagotchiImage.image = UIImage(named: TamagotchiSunImage.sun.nine)
+            default:
+                return tamagotchiImage.image = UIImage(named: "noImage")
+            }
+        } else if data.type == .star {
+            switch data.level {
+            case 0..<1:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.one)
+            case 1..<2:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.one)
+            case 2..<3:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.two)
+            case 3..<4:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.three)
+            case 4..<5:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.four)
+            case 5..<6:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.five)
+            case 6..<7:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.six)
+            case 7..<8:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.seven)
+            case 8..<9:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.eight)
+            case 9..<10:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.nine)
+            case 10...:
+                return tamagotchiImage.image = UIImage(named: TamagotchiStarImage.star.nine)
+            default:
+                return tamagotchiImage.image = UIImage(named: "noImage")
+            }
+        } else {
+            tamagotchiImage.image = UIImage(named: "noImage")
+        }
+    }
+    
+    func labelSetting(data: Tamagotchi) {
+        if data.type == .none {
+            tamagotchiNameLabel.text = "준비중이에요."
+        
+        } else {
+            tamagotchiNameLabel.text = data.name
+        }
     }
 }

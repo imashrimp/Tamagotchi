@@ -44,8 +44,8 @@
             </constraints>
             <size key="customSize" width="175" height="204"/>
             <connections>
-                <outlet property="tamagochiImage" destination="qVT-xo-OEK" id="8Kh-F6-c7U"/>
-                <outlet property="tamagochiNameLabel" destination="8AT-Ly-nbP" id="3l6-ym-5KZ"/>
+                <outlet property="tamagotchiImage" destination="qVT-xo-OEK" id="8Kh-F6-c7U"/>
+                <outlet property="tamagotchiNameLabel" destination="8AT-Ly-nbP" id="3l6-ym-5KZ"/>
             </connections>
             <point key="canvasLocation" x="388.54961832061065" y="73.943661971830991"/>
         </collectionViewCell>
