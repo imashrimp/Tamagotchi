@@ -35,26 +35,25 @@ class SelectTamagotchiViewController: UIViewController {
 
 extension SelectTamagotchiViewController: UICollectionViewDelegate {
     
+    // 시작화면 변경을 여기서 구현해야함
     // 이 메서드도 최초 선택이랑, 변경 시랑 identifer 사용해서 alert이 다르게 실행되도록
     // alert 실행 시 클로저 사용해야함.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let alert = UIAlertController(title: "", message: "다마고치 이름 넣어서 메세지 작성", preferredStyle: .alert)
-//
-//        let start = UIAlertAction(title: "시작하기", style: .default)
-//        let cancel = UIAlertAction(title: "취소", style: .default) { done in
-//            return
-//        }
-//
-//        alert.addAction(cancel)
-//        alert.addAction(start)
-//
-//
-//
-////        alert.setValue(UIImage(named: TamagotchiImageSingleton.shared.cactus.eight), forKey: "cactusEight")
-//        present(alert, animated: true)
+        
+        let vc = storyboard?.instantiateViewController(identifier: "MainViewController") as! MainViewController
+        let nav = UINavigationController(rootViewController: vc)
+        
+        nav.modalPresentationStyle = .fullScreen
+        
+        vc.myTamagotchi = tamagotchiList.tamagotchi[indexPath.row]
+        // UserDefaults는 구조체 타입을 아카이빙 언 아카이빙을 통해 저장 가능함 (https://ios-development.tistory.com/702)
+        // 그리고 UserDefualts에서 구조체 타입의 데이터를 불러올 때 키 값을 셀의 index로 하자 그러면 다마고치를 변경을 위해 셀을 누를 때 그 셀의 index를 키 값으로 받는 함수를 선언해 불러오면 됨. => 그러면 이게 변경된게 MainVC에서 보여질 때도, viewDidLoad에서 객체(변경된거, 처음에 설정한거, 앱 종료 후 재실행 경우)를 불러오는 메서드를 호출하면 됨.(아마 이 메서드에서는 키값을 설정하는게 중요할 듯.)
+        // MainVC에서는 앱 실행시 작동하는 AppDelegate에 이는 메서드에서 객체가 설정되도록 해볼까?
+        
+        
+        
+        present(nav, animated: true)
     }
-        
-        
 }
 
 extension SelectTamagotchiViewController: UICollectionViewDataSource {
@@ -68,7 +67,6 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
         cell.setTamagotchiImage(data: tamagotchiList.tamagotchi[indexPath.row])
         print(tamagotchiList.tamagotchi[indexPath.row].name)
         cell.labelSetting(data: tamagotchiList.tamagotchi[indexPath.row])
-//        print(tamagotchiList.tamagochi[indexPath.row].name)
         
         return cell
     }

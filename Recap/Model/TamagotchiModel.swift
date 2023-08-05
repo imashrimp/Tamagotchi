@@ -7,26 +7,66 @@
 
 import Foundation
 
-// identifier로 열거형의 원시값을 가져다 쓰면 되지 않을까?
-
-//각 케이스가 이미지로 연결 다리의 역할을 할 수 있으면 좋겠음. 여기 안에서 메서드(내부에 if문)를 만들어서 메서드의 리턴값이 싱글톤 클래스의 타입이면 될거 같음.
+//각 케이스가 이미지로 연결 다리의 역할을 할 수 있으면 좋겠음.
+// 이 열거형의 이미지 연산프로퍼티가 String 배열 타입이고, 배열의 index를 사용해 level과 연관지어 할 수 있을 듯?
 enum TamagotchiSpecies {
     case cactus
     case sun
     case star
     case none //이 경우에는 흑백 이미지 뱉으면 됨.
+    
+    // 이거는 이미지를 스위치문 돌 때 컬렉션뷰 셀의 index랑 아래 배열의 index랑 비교해서 쓸 거임.
+    var imageAsset: [String] {
+        switch self {
+        case .cactus:
+            return ["1-1",
+                    "1-1",
+                    "1-2",
+                    "1-3",
+                    "1-4",
+                    "1-5",
+                    "1-6",
+                    "1-7",
+                    "1-8",
+                    "1-9",
+                    "1-9"]
+        case .sun:
+            return ["2-1",
+                    "2-1",
+                    "2-2",
+                    "2-3",
+                    "2-4",
+                    "2-5",
+                    "2-6",
+                    "2-7",
+                    "2-8",
+                    "2-9",
+                    "2-9"]
+        case .star:
+            return ["3-1",
+                    "3-1",
+                    "3-2",
+                    "3-3",
+                    "3-4",
+                    "3-5",
+                    "3-6",
+                    "3-7",
+                    "3-8",
+                    "3-9",
+                    "3-9"]
+        case .none:
+            return ["noImage"]
+        }
+    }
 }
 
 struct Tamagotchi {
-    // 나중에 다마고치의 레벨별 이미지를 불러내는 조건문을 쓸 때 레벨을 구분하기 위한 switch문 상위에 if문의 조건으로 myTamagotchi(Tamagotchi타입임).type = TamagotchiSpecies.sun이면 그 아래 스위치 문에서 level에 따른 이미지 에셋을 singleton으로 불러올 때 조건의 가독성이 높아짐. 이게단가...?
-    // 뭔가 이 type프로퍼티의 열거형으로 싱글톤 접근까지 연결하고 싶음
-    // type 프로퍼티를 통해 image를 세팅하려고 하는데 이건 결국 레벨에 따라서 그 index를 정할 수 있는거다 그러면 이미지는 배열 형태로 들어가있는게 좋고 cellForItemAt에서 불리기 위해서는 아이템 이미지배열.[indexPath]
     var type: TamagotchiSpecies
     var name: String
-    var rice: Double
-    var water: Double
-    var level: Double {
-        return (rice / 5) + (water / 2)
+    var rice: Int
+    var water: Int
+    var level: Int {
+        return (rice / 5) + (water / 2) / 10
     }
 }
 

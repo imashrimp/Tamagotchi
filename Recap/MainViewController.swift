@@ -9,6 +9,9 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    //MARK: - 이거 UserDefaults에 저장된 객체를 불러와서 대체하면 됨. => 오류처리 필요없음 이 화면은 저장된 객체 없으면 나올 일 없으니까.
+    var myTamagotchi: Tamagotchi = Tamagotchi(type: .none, name: "", rice: 0, water: 0)
+    
 
     @IBOutlet var bubbleTextField: UITextField!
     @IBOutlet var imageView: UIImageView!
@@ -23,7 +26,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "대장님의 다마고치" //여기에 사용자 이름 받아와야함
+        setNavigationTitle()
         self.view.backgroundColor = Design.shared.backgroundColor
         
         configurebubbleTextField()
@@ -39,9 +42,10 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        //설정화면 때문에 전환될 거임.
     }
     
+    // 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
     func configurebubbleTextField() {
         bubbleTextField.borderStyle = .none
         bubbleTextField.background = UIImage(named: "bubble")
@@ -49,7 +53,7 @@ class MainViewController: UIViewController {
     }
     
     func configureTamagotchiImage() {
-        imageView.image = UIImage(named: "1-9")
+        imageView.image = UIImage(named: myTamagotchi.type.imageAsset[myTamagotchi.level])
     }
     
     func configureNameLabelView() {
@@ -88,4 +92,12 @@ class MainViewController: UIViewController {
         button.layer.cornerRadius = 5
     }
     
+    
+    func setNavigationTitle() {
+        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
+            return self.navigationItem.title = "대장님의 다마고치"
+        }
+        
+        self.navigationItem.title = "\(UserDefaults.standard.string(forKey: "userName"))"
+    }
 }
