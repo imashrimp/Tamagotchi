@@ -14,7 +14,7 @@ struct SettingItem {
 }
 
 struct SettingItemlList {
-    var list: [SettingItem] = [SettingItem(imageName: "pencil", title: "사용자 이름 설정하기", subtitle: "사용자 이름"),
+    var list: [SettingItem] = [SettingItem(imageName: "pencil", title: "사용자 이름 설정하기", subtitle: "대장님"),
                                SettingItem(imageName: "moon.fill", title: "다마고치 변경하기", subtitle:""),
                                SettingItem(imageName: "arrow.clockwise", title: "데이터 초기화", subtitle: "")]
 }

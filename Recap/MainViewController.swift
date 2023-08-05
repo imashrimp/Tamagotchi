@@ -5,6 +5,8 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
+//TODO: 타이틀 텍스트 컬러 바꾸면 됨.
+
 import UIKit
 
 class MainViewController: UIViewController {
@@ -70,12 +72,14 @@ class MainViewController: UIViewController {
     func configureTamagotchiNameLabel() {
         nameLabel.textAlignment = .center
         nameLabel.font = .systemFont(ofSize: 15)
+        nameLabel.textColor = Design.shared.fontAndBorderColor
         nameLabel.text = myTamagotchi.name
     }
     
     func configureStatementLabel() {
         tamagotchiStateLabel.textAlignment = .center
         tamagotchiStateLabel.font = .systemFont(ofSize: 15)
+        tamagotchiStateLabel.textColor = Design.shared.fontAndBorderColor
         tamagotchiStateLabel.text = "LV\(myTamagotchi.level)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
@@ -83,6 +87,7 @@ class MainViewController: UIViewController {
         textField.placeholder = placeholder
         textField.borderStyle = .none
         textField.backgroundColor = Design.shared.backgroundColor
+        textField.textColor = Design.shared.fontAndBorderColor
         textField.textAlignment = .center
     }
     
@@ -114,6 +119,8 @@ extension MainViewController {
     @objc func settingButtonTapped() {
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
+        
+        
         
         navigationController?.pushViewController(vc, animated: true)
     }

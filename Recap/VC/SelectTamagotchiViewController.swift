@@ -11,6 +11,9 @@ class SelectTamagotchiViewController: UIViewController {
     
 //    var identifier: // 이거는 열거형 사용해서 최초 선택이랑, 변경이랑 구분되도록
     
+    ///이 프로퍼티 사용해서 네비게이션 타이틀이랑 didSelect메서드에서 뜨는 팝업창의 버튼 달라질거임.
+    var mode: SelectTamagochiMode?
+    
     let tamagotchiList = TamagotchiList()
     
     @IBOutlet var tamagochiCollectionView: UICollectionView!
@@ -27,7 +30,8 @@ class SelectTamagotchiViewController: UIViewController {
     }
     
     func configureView() {
-        title = "다마고치 선택하기"
+
+        self.navigationItem.title = "대장님의 다마고치"
         self.view.backgroundColor = Design.shared.backgroundColor
         self.tamagochiCollectionView.backgroundColor = Design.shared.backgroundColor
     }
@@ -44,19 +48,15 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
         //레벨1: 화면전환 안되게
         //레벨2: 타마고치 생성 화면으로 전환
         
-        let vc = storyboard?.instantiateViewController(identifier: "MainViewController") as! MainViewController
-        let nav = UINavigationController(rootViewController: vc)
         
-        nav.modalPresentationStyle = .fullScreen
-        
-        vc.myTamagotchi = tamagotchiList.tamagotchi[indexPath.row]
+//        vc.myTamagotchi = tamagotchiList.tamagotchi[indexPath.row]
         // UserDefaults는 구조체 타입을 아카이빙 언 아카이빙을 통해 저장 가능함 (https://ios-development.tistory.com/702)
         // 그리고 UserDefualts에서 구조체 타입의 데이터를 불러올 때 키 값을 셀의 index로 하자 그러면 다마고치를 변경을 위해 셀을 누를 때 그 셀의 index를 키 값으로 받는 함수를 선언해 불러오면 됨. => 그러면 이게 변경된게 MainVC에서 보여질 때도, viewDidLoad에서 객체(변경된거, 처음에 설정한거, 앱 종료 후 재실행 경우)를 불러오는 메서드를 호출하면 됨.(아마 이 메서드에서는 키값을 설정하는게 중요할 듯.)
         // MainVC에서는 앱 실행시 작동하는 AppDelegate에 이는 메서드에서 객체가 설정되도록 해볼까?
         
         
         
-        present(nav, animated: true)
+//        present(nav, animated: true)
     }
 }
 
