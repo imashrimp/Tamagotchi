@@ -7,14 +7,16 @@
 
 import UIKit
 
-struct Design {
-    static var shared = Design()
+class Design {
+    static let shared = Design()
     var backgroundColor: UIColor = UIColor(red: 245/255, green: 252/255, blue: 252/255, alpha: 1)
     var fontAndBorderColor: UIColor = UIColor(red: 77/255, green: 106/255, blue: 120/255, alpha: 1)
+    
+    private init() {}
 }
 
-struct TamagochiImageSingleton {
-    static var shared = TamagochiImageSingleton()
+struct TamagotchiImageSingleton {
+    static var shared = TamagotchiImageSingleton()
     
     var cactus = TamagotchiCactusImage.cactus
     var sun = TamagotchiSunImage.sun
@@ -22,7 +24,6 @@ struct TamagochiImageSingleton {
 }
 
 struct TamagotchiCactusImage {
-    
     static var cactus = TamagotchiCactusImage()
     
     var one = "1-1"
@@ -34,7 +35,6 @@ struct TamagotchiCactusImage {
     var seven = "1-7"
     var eight = "1-8"
     var nine = "1-9"
-    
 }
 
 struct TamagotchiSunImage {

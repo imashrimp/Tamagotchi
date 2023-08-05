@@ -24,16 +24,18 @@ class TamagotchiCollectionViewCell: UICollectionViewCell, CollectionCellContents
         tamagochiNameLabel.font = .systemFont(ofSize: 13)
         tamagochiNameLabel.textColor = Design.shared.fontAndBorderColor
         tamagochiNameLabel.clipsToBounds = true
-        tamagochiNameLabel.layer.cornerRadius = 3 // 변경 가능함
+        tamagochiNameLabel.layer.cornerRadius = 5 // 변경 가능함
         tamagochiNameLabel.layer.borderWidth = 3 // 변경 가능함
         tamagochiNameLabel.layer.borderColor = Design.shared.fontAndBorderColor.cgColor
         tamagochiNameLabel.numberOfLines = 0
         tamagochiNameLabel.backgroundColor = Design.shared.backgroundColor
+        tamagochiNameLabel.textAlignment = .center
     }
 
     func contentsConfigure(data: Tamagotchi) {
         // 여기서 받아올 객체가 필요함.
-        tamagochiImage.image = UIImage(named: "2-6")
+        tamagochiImage.image = UIImage(named: TamagotchiImageSingleton.shared.cactus.one)
+        tamagochiNameLabel.text = data.name
 //        tamagochiNameLabel.text =
     }
 }
