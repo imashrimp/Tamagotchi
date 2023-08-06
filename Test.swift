@@ -20,4 +20,21 @@ struct Methods {
         
         print(tamagotchi)
     }
+    
+    static func loadTamagotchiStruct(key: String) -> Tamagotchi {
+        
+        guard let savedTamagotchiData = UserDefaults.standard.object(forKey: key) as? Data else {
+            print("다마고치를 Data 타입으로 불러오는데 실패했습니다!")
+            return Tamagotchi(type: "", name: "", rice: 0, water: 0)
+        }
+        
+        let decorder = JSONDecoder()
+        
+        guard let savedTamagotchi = try? decorder.decode(Tamagotchi.self, from: savedTamagotchiData) else {
+            print("다마고치 Data 타입을 Tamagotchi타입으로 변경하는데 실패했습니다.")
+            return Tamagotchi(type: "", name: "", rice: 0, water: 0)
+        }
+        print(savedTamagotchi)
+        return savedTamagotchi
+    }
 }

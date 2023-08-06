@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = Design.backgroundColor
-    
+        
         setNavigationBar()
         
         configurebubbleTextField()
@@ -46,24 +46,28 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //설정화면을 통해 전활되기 때문에 사용될 거임.
-
+        
         setNavigationBar()
         
         loadTamagochiData()
-
-        // 여기서 myTamagotchi에 변경된 객체 할당하는 코드 작성하면 됨.
     }
     
     //밥이랑 물 버튼 action이 사용하는 UItextField만 다르지 나머지는 반복임. 더 간단하게 쓸 수 있지 않을까?
+    //여기에서 statelabel 최신화 해야함
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
-
+        
         guard let riceToEat = riceTextField.text else { return }
         
         guard let riceToEatInt = Int(riceToEat) else {
             myTamagotchi.rice += 1
-            //키 값 바궈야함 객체 고유의 ID로
             
+            //이 저장과 불러와서 최신화 하는 걸 담당하는 메서드가 있으면 더 깔끔할 듯. 다만, key값 설정에 주의해야함.
+            //키 값 바궈야함 객체 고유의 ID로
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            
+            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+            // 레벨은 따로 빼서 해보자
+            tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
             return
         }
@@ -71,6 +75,11 @@ class MainViewController: UIViewController {
         myTamagotchi.rice += riceToEatInt
         
         Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+        
+        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+        
+        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+
     }
     
     @IBAction func drinkWaterButtonTapped(_ sender: UIButton) {
@@ -83,6 +92,10 @@ class MainViewController: UIViewController {
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
             
+            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+            // 레벨은 따로 빼서 해보자
+            tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            
             return
         }
         
@@ -90,8 +103,11 @@ class MainViewController: UIViewController {
         
         Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
         
+        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+        // 레벨은 따로 빼서 해보자
+        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+        
     }
-    
     
     // 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
     func configurebubbleTextField() {
@@ -99,7 +115,6 @@ class MainViewController: UIViewController {
         bubbleTextField.background = UIImage(named: "bubble")
         bubbleTextField.isEnabled = false
     }
-    
     
     func configureNameLabelView() {
         nameLabelView.layer.cornerRadius = 5
@@ -112,14 +127,13 @@ class MainViewController: UIViewController {
         nameLabel.textAlignment = .center
         nameLabel.font = .systemFont(ofSize: 15)
         nameLabel.textColor = Design.fontAndBorderColor
-        
     }
-        
+    
     func configureStatementLabel() {
         tamagotchiStateLabel.textAlignment = .center
         tamagotchiStateLabel.font = .systemFont(ofSize: 15)
         tamagotchiStateLabel.textColor = Design.fontAndBorderColor
-        //        tamagotchiStateLabel.text = "LV\(myTamagotchi.level)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
     func configureFeedTextField(textField: UITextField, placeholder: String) {
@@ -156,11 +170,8 @@ class MainViewController: UIViewController {
     func showUIContents(myTamagotchi: Tamagotchi) {
         imageView.image = UIImage(named: myTamagotchi.type)
         nameLabel.text = myTamagotchi.name
-        
-        
-        
     }
-
+    
 }
 
 //MARK: - 네비게이션바 설정
