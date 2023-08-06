@@ -98,7 +98,7 @@ extension SettingViewController: UITableViewDataSource {
             if let userName = UserDefaults.standard.string(forKey: "userName") {
                 cell.cellSubTitleLabel.text = userName
             } else {
-                cell.cellSubTitleLabel.text = cellItem.list[0].subtitle
+                cell.cellSubTitleLabel.text = "사용자 이름"
             }
         } else {
             cell.cellSubTitleLabel.text = ""

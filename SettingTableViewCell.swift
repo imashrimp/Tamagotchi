@@ -18,6 +18,7 @@ class SettingTableViewCell: UITableViewCell {
         cellImageView.tintColor = Design.fontAndBorderColor
         cellTitleLabel.textColor = Design.fontAndBorderColor
         cellSubTitleLabel.textColor = Design.fontAndBorderColor
+        cellSubTitleLabel.font = .systemFont(ofSize: 13)
         self.backgroundColor = Design.backgroundColor
         self.accessoryType = .disclosureIndicator
     }

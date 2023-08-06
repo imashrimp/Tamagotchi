@@ -328,7 +328,7 @@ extension MainViewController {
             return self.navigationItem.title = "대장님의 다마고치"
         }
         
-        self.navigationItem.title = userName
+        self.navigationItem.title = "\(userName)님의 다마고치"
     }
     
     @objc func settingButtonTapped() {
