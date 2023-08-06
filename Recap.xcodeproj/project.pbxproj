@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		173B67002A7F501A00B9928F /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 173B66FF2A7F501A00B9928F /* IQKeyboardManagerSwift */; };
+		1756BD872A7FB61E00C72E5F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1756BD862A7FB61E00C72E5F /* Extensions.swift */; };
 		17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */; };
 		17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43712A7CCF420072FEA7 /* SceneDelegate.swift */; };
 		17BE43772A7CCF420072FEA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17BE43752A7CCF420072FEA7 /* Main.storyboard */; };
@@ -29,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1756BD862A7FB61E00C72E5F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = SOURCE_ROOT; };
 		17BE436C2A7CCF420072FEA7 /* Recap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17BE43712A7CCF420072FEA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				173B67002A7F501A00B9928F /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +86,7 @@
 		17BE436E2A7CCF420072FEA7 /* Recap */ = {
 			isa = PBXGroup;
 			children = (
+				1756BD862A7FB61E00C72E5F /* Extensions.swift */,
 				17BE43B02A7F20550072FEA7 /* Test.swift */,
 				17BE43A42A7D31C20072FEA7 /* SettingTableViewCell.swift */,
 				17BE43A22A7D30730072FEA7 /* SettingViewController.swift */,
@@ -172,6 +177,7 @@
 			);
 			name = Recap;
 			packageProductDependencies = (
+				173B66FF2A7F501A00B9928F /* IQKeyboardManagerSwift */,
 			);
 			productName = Recap;
 			productReference = 17BE436C2A7CCF420072FEA7 /* Recap.app */;
@@ -202,6 +208,7 @@
 			);
 			mainGroup = 17BE43632A7CCF420072FEA7;
 			packageReferences = (
+				173B66FE2A7F501A00B9928F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 17BE436D2A7CCF420072FEA7 /* Products */;
 			projectDirPath = "";
@@ -242,6 +249,7 @@
 				17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */,
 				17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */,
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,
+				1756BD872A7FB61E00C72E5F /* Extensions.swift in Sources */,
 				17BE43A62A7D31C20072FEA7 /* SettingTableViewCell.swift in Sources */,
 				17BE43842A7CDD2F0072FEA7 /* SelectTamagotchiViewController.swift in Sources */,
 				17BE438A2A7CE2850072FEA7 /* Protocol.swift in Sources */,
@@ -479,7 +487,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		173B66FE2A7F501A00B9928F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		173B66FF2A7F501A00B9928F /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 173B66FE2A7F501A00B9928F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		17BE43902A7CE62A0072FEA7 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:RswiftGenerateInternalResources";

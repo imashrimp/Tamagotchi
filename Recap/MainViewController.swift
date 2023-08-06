@@ -6,8 +6,8 @@
 //
 
 //TODO: 타이틀 텍스트 컬러 바꾸면 됨.
-// 1. 레벨 설정
-// 2. 레벨 설정에 따른 이미지 설정
+//1. textField에 숫자만 입력가능하도록. 그리고 키보드 타입 제한하기.
+//2. iqkeyboard 사용해서 키보드 올리고 아무때나 탭 하면 키보드 내려가게하기
 
 //레벨을 연산프로퍼티로 설정하고, set에서 이미지 설정 메서드 호출하는게 최종 버전일듯? 일단 둘 다 메서드로 구현해보자
 
@@ -15,9 +15,15 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    //MARK: - 이거 UserDefaults에 저장된 객체를 불러와서 대체하면 됨. => 오류처리 필요없음 이 화면은 저장된 객체 없으면 나올 일 없으니까.
     var myTamagotchi: Tamagotchi = Tamagotchi(type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
-    var myTamgotchiLevel: Int = 0
+    var myTamgotchiLevel: Int = 0 {
+        didSet {
+            //MARK: - 이거 좀 더 예쁘게 다듬어보자
+            bubbleTextField.text = sentenceArray.randomElement()
+        }
+    }
+    
+    let sentenceArray: [String] = ["아... 배고픔.", "밥 들어오나?", "좀 먹은거 같네.", "아 배부르다.", "고만 먹을란다."]
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
     
@@ -34,14 +40,15 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Design.backgroundColor
+        riceTextField.delegate = self
+        waterTextField.delegate = self
         
         configurebubbleTextField()
         configureNameLabelView()
         configureTamagotchiNameLabel()
         configureStatementLabel()
-        configureFeedTextField(textField: riceTextField, placeholder: "밥줘")
-        configureFeedTextField(textField: waterTextField, placeholder: "물줘")
+        configureFeedTextField(textField: riceTextField, placeholder: "밥줘", tag: 0)
+        configureFeedTextField(textField: waterTextField, placeholder: "물줘", tag: 1)
         configureButton(button: eatRiceButton, buttonImage: "leaf.circle", buttonTitle: "밥 먹기")
         configureButton(button: drinkWaterButton, buttonImage: "drop.circle", buttonTitle: "물 먹기")
     }
@@ -50,7 +57,9 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         setNavigationBar()
         loadTamagochiData()
+        showMyTamagotchiName()
         calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+        showMyTamagotchiStatement()
         //이게 좀 이상한 구조이긴함.
         showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
     }
@@ -113,25 +122,38 @@ class MainViewController: UIViewController {
             return
         }
         
-        myTamagotchi.water += waterToDrinkInt
-        
-        Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
-        
-        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-        // 레벨은 따로 빼서 해보자
-        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-        
-        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
-        
-        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
-        
+        if waterToDrinkInt >= 50 {
+            let alert = UIAlertController(title: "알림", message: "물은 한 번에 49개 까지 줄 수 있습니다.", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(okay)
+            present(alert, animated: true)
+            waterTextField.text = ""
+        } else {
+            myTamagotchi.water += waterToDrinkInt
+            
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            
+            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+            // 레벨은 따로 빼서 해보자
+            tamagotchiStateLabel.text = "LV \(myTamgotchiLevel)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            
+            calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            
+            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+        }
     }
     
     func loadTamagochiData() {
         myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-        
+    }
+    
+    func showMyTamagotchiName() {
         nameLabel.text = myTamagotchi.name
+    }
+    
+    func showMyTamagotchiStatement() {
         //MARK: - 이거 형태 더 다듬을 수 있을 듯
+        
         tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
@@ -141,9 +163,13 @@ class MainViewController: UIViewController {
     }
     
     func calculateLevel(rice: Int, water: Int) /*-> Int*/ {
-        let level = ((rice / 5) + (water / 2)) / 10
-        myTamgotchiLevel = level
-        //        return level
+        var level = ((rice / 5) + (water / 2)) / 10
+        if level >= 10 {
+            level = 10
+            myTamgotchiLevel = level
+        } else {
+            myTamgotchiLevel = level
+        }
     }
     
     func showTamagotchiImage(tamagotchiType: String ,level: Int)  {
@@ -234,6 +260,62 @@ class MainViewController: UIViewController {
         }
     }
 }
+extension MainViewController: UITextFieldDelegate {
+
+    /// 이 메서드는 텍스트 필드에 어떤 값이 들어왔을 때마다 작동하며 반환값이 true이면, 그 값이 입력되고, false 이면 무시됨
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        ///와일드 카드 식별자가 원래 의도는 number라는 상수로 두고 waterTextField의 값을 49이하로 제한할 때 사용하려 했음
+        guard let _ = Int(string) else {
+            let alert = UIAlertController(title: "알림", message: "숫자만 입력해주세요.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            
+            alert.addAction(ok)
+            present(alert, animated: true)
+            textField.text = ""
+            return false
+        }
+        return true
+        
+        //밥 텍스트 필드는 입력 중에 제한이 가능하나 두자리 숫자까지 입력 후 백스페이스를 누르면 3자리 입력한 버그 발생
+        //물 텍스트 필드는 49이하의 값을 받아오는걸 아직 못 짬
+//        guard let value = textField.text else { return true }
+//
+//        if textField.tag == 0 {
+//            if value.count >= 2 {
+//
+//                textField.resignFirstResponder()
+//
+//                let alert = UIAlertController(title: "알림", message: "밥은 99개 까지 줄 수 있습니다.", preferredStyle: .alert)
+//                let okay = UIAlertAction(title: "확인", style: .default)
+//                alert.addAction(okay)
+//                present(alert, animated: true)
+//
+//                textField.text = ""
+//
+//                return false
+//            } else {
+//                return true
+//            }
+//        } else { // tag == 1 일때
+////            var waterCount = 0
+//
+////            if number >= 50 {
+////                print(50)
+////                textField.resignFirstResponder()
+////
+////                let alert = UIAlertController(title: "알림", message: "물은 49개 까지 줄 수 있습니다.", preferredStyle: .alert)
+////                let okay = UIAlertAction(title: "확인", style: .default)
+////                alert.addAction(okay)
+////                present(alert, animated: true)
+////
+////                textField.text = ""
+////                return false
+////            }
+//            return true
+//        }
+    }
+}
 
 //MARK: - 네비게이션바 설정
 extension MainViewController {
@@ -264,6 +346,9 @@ extension MainViewController {
         bubbleTextField.borderStyle = .none
         bubbleTextField.background = UIImage(named: "bubble")
         bubbleTextField.isEnabled = false
+        bubbleTextField.textAlignment = .center
+        bubbleTextField.font = .systemFont(ofSize: 15)
+        bubbleTextField.textColor = Design.fontAndBorderColor
     }
     
     func configureNameLabelView() {
@@ -285,12 +370,14 @@ extension MainViewController {
         tamagotchiStateLabel.textColor = Design.fontAndBorderColor
     }
     
-    func configureFeedTextField(textField: UITextField, placeholder: String) {
+    func configureFeedTextField(textField: UITextField, placeholder: String, tag: Int) {
         textField.placeholder = placeholder
         textField.borderStyle = .none
         textField.backgroundColor = Design.backgroundColor
         textField.textColor = Design.fontAndBorderColor
         textField.textAlignment = .center
+        textField.keyboardType = .numberPad
+        textField.tag = tag
     }
     
     func configureButton(button: UIButton, buttonImage: String, buttonTitle: String) {

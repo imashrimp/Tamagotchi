@@ -60,33 +60,45 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
         } else {
             
-            UserDefaults.standard.set(true, forKey: "launched")
+            let alert = UIAlertController(title: "\"\(tamagotchiList.tamagotchi[indexPath.row].name)\" 다마고치를 선택하겠습니까?", message: #""확인"을 누르면 선택이 됩니다."#, preferredStyle: .alert)
+            
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            let okay = UIAlertAction(title: "확인", style: .default) { okay in
+                UserDefaults.standard.set(true, forKey: "launched")
 
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-            let nav = UINavigationController(rootViewController: vc)
-            
-            //팝업창 띄워서 확인 버튼 눌렀을 때 UserDefaults에 객체를 저장하고 MainVC에서는 이걸 불러오자
-            
-            let selectedTamagotchi = tamagotchiList.tamagotchi[indexPath.row]
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+                let nav = UINavigationController(rootViewController: vc)
+                
+                //팝업창 띄워서 확인 버튼 눌렀을 때 UserDefaults에 객체를 저장하고 MainVC에서는 이걸 불러오자
+                
+                let selectedTamagotchi = self.tamagotchiList.tamagotchi[indexPath.row]
 
-//            let encoder = JSONEncoder()
-//
-//            //트라이가 뭘하는가? 찾아보자
-//            if let encoded = try? encoder.encode(selectedTamagotchi) {
-//                // 키값 바꿔야함 객체 고유의 ID로
-//                UserDefaults.standard.set(encoded, forKey: "encoded")
-//            }
-            Methods.saveTamagotchiStruct(tamagotchi: selectedTamagotchi, key: "ID")
+    //            let encoder = JSONEncoder()
+    //
+    //            //트라이가 뭘하는가? 찾아보자
+    //            if let encoded = try? encoder.encode(selectedTamagotchi) {
+    //                // 키값 바꿔야함 객체 고유의 ID로
+    //                UserDefaults.standard.set(encoded, forKey: "encoded")
+    //            }
+                Methods.saveTamagotchiStruct(tamagotchi: selectedTamagotchi, key: "ID")
+                
+                vc.myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+                
+                sceneDelegate?.window?.rootViewController = nav
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }
             
-            vc.myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+            alert.addAction(cancel)
+            alert.addAction(okay)
             
-            sceneDelegate?.window?.rootViewController = nav
-            sceneDelegate?.window?.makeKeyAndVisible()
+            present(alert, animated: true)
+            
+
             
             
         }
@@ -94,9 +106,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
         // UserDefaults는 구조체 타입을 아카이빙 언 아카이빙을 통해 저장 가능함 (https://ios-development.tistory.com/702)
         // 그리고 UserDefualts에서 구조체 타입의 데이터를 불러올 때 키 값을 셀의 index로 하자 그러면 다마고치를 변경을 위해 셀을 누를 때 그 셀의 index를 키 값으로 받는 함수를 선언해 불러오면 됨. => 그러면 이게 변경된게 MainVC에서 보여질 때도, viewDidLoad에서 객체(변경된거, 처음에 설정한거, 앱 종료 후 재실행 경우)를 불러오는 메서드를 호출하면 됨.(아마 이 메서드에서는 키값을 설정하는게 중요할 듯.)
         // MainVC에서는 앱 실행시 작동하는 AppDelegate에 이는 메서드에서 객체가 설정되도록 해볼까?
-        
-        
-        
+
 //        present(nav, animated: true)
     }
 }
