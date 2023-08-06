@@ -12,8 +12,8 @@ import UIKit
 class MainViewController: UIViewController {
     
     //MARK: - 이거 UserDefaults에 저장된 객체를 불러와서 대체하면 됨. => 오류처리 필요없음 이 화면은 저장된 객체 없으면 나올 일 없으니까.
-    var myTamagotchi: Tamagotchi = Tamagotchi(type: .none, name: "", rice: 0, water: 0)
-
+    var myTamagotchi: Tamagotchi = Tamagotchi(type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
+    
     let settingButton: UIBarButtonItem = UIBarButtonItem()
     
     @IBOutlet var bubbleTextField: UITextField!
@@ -29,12 +29,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Design.shared.backgroundColor
-
-        setNavigationBar()
+        self.view.backgroundColor = Design.backgroundColor
     
+        setNavigationBar()
+        
         configurebubbleTextField()
-        configureTamagotchiImage()
         configureNameLabelView()
         configureTamagotchiNameLabel()
         configureStatementLabel()
@@ -46,10 +45,53 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //설정화면 때문에 전환될 거임.
+        //설정화면을 통해 전활되기 때문에 사용될 거임.
+
         setNavigationBar()
+        
+        loadTamagochiData()
+
         // 여기서 myTamagotchi에 변경된 객체 할당하는 코드 작성하면 됨.
     }
+    
+    //밥이랑 물 버튼 action이 사용하는 UItextField만 다르지 나머지는 반복임. 더 간단하게 쓸 수 있지 않을까?
+    @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
+
+        guard let riceToEat = riceTextField.text else { return }
+        
+        guard let riceToEatInt = Int(riceToEat) else {
+            myTamagotchi.rice += 1
+            //키 값 바궈야함 객체 고유의 ID로
+            
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            
+            return
+        }
+        
+        myTamagotchi.rice += riceToEatInt
+        
+        Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+    }
+    
+    @IBAction func drinkWaterButtonTapped(_ sender: UIButton) {
+        
+        guard let waterToDrink = waterTextField.text else { return }
+        
+        guard let waterToDrinkInt = Int(waterToDrink) else {
+            
+            myTamagotchi.water += 1
+            
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            
+            return
+        }
+        
+        myTamagotchi.water += waterToDrinkInt
+        
+        Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+        
+    }
+    
     
     // 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
     func configurebubbleTextField() {
@@ -58,48 +100,67 @@ class MainViewController: UIViewController {
         bubbleTextField.isEnabled = false
     }
     
-    func configureTamagotchiImage() {
-        imageView.image = UIImage(named: myTamagotchi.type.imageAsset[myTamagotchi.level])
-    }
     
     func configureNameLabelView() {
         nameLabelView.layer.cornerRadius = 5
-        nameLabelView.layer.borderColor = Design.shared.fontAndBorderColor.cgColor
+        nameLabelView.layer.borderColor = Design.fontAndBorderColor.cgColor
         nameLabelView.layer.borderWidth = 3
-        nameLabelView.backgroundColor = Design.shared.backgroundColor
+        nameLabelView.backgroundColor = Design.backgroundColor
     }
     
     func configureTamagotchiNameLabel() {
         nameLabel.textAlignment = .center
         nameLabel.font = .systemFont(ofSize: 15)
-        nameLabel.textColor = Design.shared.fontAndBorderColor
-        nameLabel.text = myTamagotchi.name
+        nameLabel.textColor = Design.fontAndBorderColor
+        
     }
-    
+        
     func configureStatementLabel() {
         tamagotchiStateLabel.textAlignment = .center
         tamagotchiStateLabel.font = .systemFont(ofSize: 15)
-        tamagotchiStateLabel.textColor = Design.shared.fontAndBorderColor
-        tamagotchiStateLabel.text = "LV\(myTamagotchi.level)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+        tamagotchiStateLabel.textColor = Design.fontAndBorderColor
+        //        tamagotchiStateLabel.text = "LV\(myTamagotchi.level)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
     func configureFeedTextField(textField: UITextField, placeholder: String) {
         textField.placeholder = placeholder
         textField.borderStyle = .none
-        textField.backgroundColor = Design.shared.backgroundColor
-        textField.textColor = Design.shared.fontAndBorderColor
+        textField.backgroundColor = Design.backgroundColor
+        textField.textColor = Design.fontAndBorderColor
         textField.textAlignment = .center
     }
     
     func configureButton(button: UIButton, buttonImage: String, buttonTitle: String) {
         button.setImage(UIImage(systemName: buttonImage), for: .normal)
         button.setTitle(buttonTitle, for: .normal)
-        button.tintColor = Design.shared.fontAndBorderColor
-        button.setTitleColor(Design.shared.fontAndBorderColor, for: .normal)
-        button.layer.borderColor = Design.shared.fontAndBorderColor.cgColor
+        button.tintColor = Design.fontAndBorderColor
+        button.setTitleColor(Design.fontAndBorderColor, for: .normal)
+        button.layer.borderColor = Design.fontAndBorderColor.cgColor
         button.layer.borderWidth = 2
         button.layer.cornerRadius = 5
     }
+    
+    func loadTamagochiData() {
+        // 이거 @property wrapper 써서 바꿀 수 있음
+        if let savedTamagotchiData = UserDefaults.standard.object(forKey: "test") as? Data {
+            
+            let decorder = JSONDecoder()
+            
+            if let savedMyTamgotchi = try? decorder.decode(Tamagotchi.self, from: savedTamagotchiData) {
+                
+                myTamagotchi = savedMyTamgotchi
+            }
+        }
+    }
+    
+    func showUIContents(myTamagotchi: Tamagotchi) {
+        imageView.image = UIImage(named: myTamagotchi.type)
+        nameLabel.text = myTamagotchi.name
+        
+        
+        
+    }
+
 }
 
 //MARK: - 네비게이션바 설정
@@ -107,7 +168,7 @@ extension MainViewController {
     
     func setNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingButtonTapped))
-        navigationItem.rightBarButtonItem?.tintColor = Design.shared.fontAndBorderColor
+        navigationItem.rightBarButtonItem?.tintColor = Design.fontAndBorderColor
         
         guard let userName = UserDefaults.standard.string(forKey: "userName") else {
             return self.navigationItem.title = "대장님의 다마고치"
@@ -119,8 +180,6 @@ extension MainViewController {
     @objc func settingButtonTapped() {
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
-        
-        
         
         navigationController?.pushViewController(vc, animated: true)
     }

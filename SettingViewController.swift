@@ -21,8 +21,8 @@ class SettingViewController: UIViewController {
         
         setNavBar()
         
-        self.view.backgroundColor = Design.shared.backgroundColor
-        settingTableView.backgroundColor = Design.shared.backgroundColor
+        self.view.backgroundColor = Design.backgroundColor
+        settingTableView.backgroundColor = Design.backgroundColor
         
         settingTableView.rowHeight = 70
         
@@ -32,7 +32,7 @@ class SettingViewController: UIViewController {
     
     func setNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "lessthan"), style: .plain, target: self, action: #selector(popNavController))
-        navigationItem.leftBarButtonItem?.tintColor = Design.shared.fontAndBorderColor
+        navigationItem.leftBarButtonItem?.tintColor = Design.fontAndBorderColor
         
         navigationItem.title = "설정"
     }

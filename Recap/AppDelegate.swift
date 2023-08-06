@@ -12,6 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UILabel.appearance().textColor = Design.fontAndBorderColor
+        //보더 칼라, 백그라운드 칼라 여기서 정해주자
+        
+        
         return true
     }
 

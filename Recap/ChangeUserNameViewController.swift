@@ -14,7 +14,7 @@ class ChangeUserNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Design.shared.backgroundColor
+        self.view.backgroundColor = Design.backgroundColor
 
         setNavBar()
         textfieldConfigure()
@@ -28,7 +28,7 @@ class ChangeUserNameViewController: UIViewController {
     }
 
     func setNavBar() {
-        navigationController?.navigationBar.tintColor = Design.shared.fontAndBorderColor
+        navigationController?.navigationBar.tintColor = Design.fontAndBorderColor
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveUserName))
     }

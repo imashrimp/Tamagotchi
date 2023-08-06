@@ -15,10 +15,10 @@ class SettingTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        cellImageView.tintColor = Design.shared.fontAndBorderColor
-        cellTitleLabel.textColor = Design.shared.fontAndBorderColor
-        cellSubTitleLabel.textColor = Design.shared.fontAndBorderColor
-        self.backgroundColor = Design.shared.backgroundColor
+        cellImageView.tintColor = Design.fontAndBorderColor
+        cellTitleLabel.textColor = Design.fontAndBorderColor
+        cellSubTitleLabel.textColor = Design.fontAndBorderColor
+        self.backgroundColor = Design.backgroundColor
         self.accessoryType = .disclosureIndicator
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SettingItem {
+struct SettingItem: Codable {
     var imageName: String
     var title: String
     var subtitle: String

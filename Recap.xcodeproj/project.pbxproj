@@ -25,6 +25,7 @@
 		17BE43A92A7D343E0072FEA7 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43A82A7D343E0072FEA7 /* SettingModel.swift */; };
 		17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */; };
 		17BE43AD2A7E6C020072FEA7 /* ModeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* ModeID.swift */; };
+		17BE43B12A7F20550072FEA7 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43B02A7F20550072FEA7 /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		17BE43A82A7D343E0072FEA7 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameViewController.swift; sourceTree = "<group>"; };
 		17BE43AC2A7E6C020072FEA7 /* ModeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeID.swift; sourceTree = "<group>"; };
+		17BE43B02A7F20550072FEA7 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		17BE436E2A7CCF420072FEA7 /* Recap */ = {
 			isa = PBXGroup;
 			children = (
+				17BE43B02A7F20550072FEA7 /* Test.swift */,
 				17BE43A42A7D31C20072FEA7 /* SettingTableViewCell.swift */,
 				17BE43A22A7D30730072FEA7 /* SettingViewController.swift */,
 				17BE43AC2A7E6C020072FEA7 /* ModeID.swift */,
@@ -231,6 +234,7 @@
 			files = (
 				17BE43A92A7D343E0072FEA7 /* SettingModel.swift in Sources */,
 				17BE438C2A7CE37B0072FEA7 /* TamagotchiModel.swift in Sources */,
+				17BE43B12A7F20550072FEA7 /* Test.swift in Sources */,
 				17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */,
 				17BE43942A7CEC5A0072FEA7 /* AssetSingleton.swift in Sources */,
 				17BE43AD2A7E6C020072FEA7 /* ModeID.swift in Sources */,
