@@ -74,13 +74,16 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
             let selectedTamagotchi = tamagotchiList.tamagotchi[indexPath.row]
 
-            let encoder = JSONEncoder()
-
-            //트라이가 뭘하는가? 찾아보자
-            if let encoded = try? encoder.encode(selectedTamagotchi) {
-                // 키값 바꿔야함 객체 고유의 ID로
-                UserDefaults.standard.set(encoded, forKey: "encoded")
-            }
+//            let encoder = JSONEncoder()
+//
+//            //트라이가 뭘하는가? 찾아보자
+//            if let encoded = try? encoder.encode(selectedTamagotchi) {
+//                // 키값 바꿔야함 객체 고유의 ID로
+//                UserDefaults.standard.set(encoded, forKey: "encoded")
+//            }
+            Methods.saveTamagotchiStruct(tamagotchi: selectedTamagotchi, key: "ID")
+            
+            vc.myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
             
             sceneDelegate?.window?.rootViewController = nav
             sceneDelegate?.window?.makeKeyAndVisible()

@@ -18,7 +18,7 @@ struct Methods {
             UserDefaults.standard.set(encoded, forKey: key)
         }
         
-        print(tamagotchi)
+        print(#function,tamagotchi)
     }
     
     static func loadTamagotchiStruct(key: String) -> Tamagotchi {
@@ -34,7 +34,7 @@ struct Methods {
             print("다마고치 Data 타입을 Tamagotchi타입으로 변경하는데 실패했습니다.")
             return Tamagotchi(type: "", name: "", rice: 0, water: 0)
         }
-        print(savedTamagotchi)
+        print(#function,savedTamagotchi)
         return savedTamagotchi
     }
 }

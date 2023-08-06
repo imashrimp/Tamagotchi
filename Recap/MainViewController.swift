@@ -48,12 +48,10 @@ class MainViewController: UIViewController {
         //설정화면을 통해 전활되기 때문에 사용될 거임.
         
         setNavigationBar()
-        
         loadTamagochiData()
     }
     
     //밥이랑 물 버튼 action이 사용하는 UItextField만 다르지 나머지는 반복임. 더 간단하게 쓸 수 있지 않을까?
-    //여기에서 statelabel 최신화 해야함
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
         
         guard let riceToEat = riceTextField.text else { return }
@@ -133,7 +131,6 @@ class MainViewController: UIViewController {
         tamagotchiStateLabel.textAlignment = .center
         tamagotchiStateLabel.font = .systemFont(ofSize: 15)
         tamagotchiStateLabel.textColor = Design.fontAndBorderColor
-        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
     func configureFeedTextField(textField: UITextField, placeholder: String) {
@@ -155,23 +152,16 @@ class MainViewController: UIViewController {
     }
     
     func loadTamagochiData() {
-        // 이거 @property wrapper 써서 바꿀 수 있음
-        if let savedTamagotchiData = UserDefaults.standard.object(forKey: "test") as? Data {
-            
-            let decorder = JSONDecoder()
-            
-            if let savedMyTamgotchi = try? decorder.decode(Tamagotchi.self, from: savedTamagotchiData) {
-                
-                myTamagotchi = savedMyTamgotchi
-            }
-        }
+        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+        
+        nameLabel.text = myTamagotchi.name
+        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
     
     func showUIContents(myTamagotchi: Tamagotchi) {
         imageView.image = UIImage(named: myTamagotchi.type)
         nameLabel.text = myTamagotchi.name
     }
-    
 }
 
 //MARK: - 네비게이션바 설정
