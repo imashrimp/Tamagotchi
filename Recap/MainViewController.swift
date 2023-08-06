@@ -6,6 +6,10 @@
 //
 
 //TODO: 타이틀 텍스트 컬러 바꾸면 됨.
+// 1. 레벨 설정
+// 2. 레벨 설정에 따른 이미지 설정
+
+//레벨을 연산프로퍼티로 설정하고, set에서 이미지 설정 메서드 호출하는게 최종 버전일듯? 일단 둘 다 메서드로 구현해보자
 
 import UIKit
 
@@ -13,6 +17,7 @@ class MainViewController: UIViewController {
     
     //MARK: - 이거 UserDefaults에 저장된 객체를 불러와서 대체하면 됨. => 오류처리 필요없음 이 화면은 저장된 객체 없으면 나올 일 없으니까.
     var myTamagotchi: Tamagotchi = Tamagotchi(type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
+    var myTamgotchiLevel: Int = 0
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
     
@@ -31,8 +36,6 @@ class MainViewController: UIViewController {
         
         self.view.backgroundColor = Design.backgroundColor
         
-        setNavigationBar()
-        
         configurebubbleTextField()
         configureNameLabelView()
         configureTamagotchiNameLabel()
@@ -45,10 +48,11 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //설정화면을 통해 전활되기 때문에 사용될 거임.
-        
         setNavigationBar()
         loadTamagochiData()
+        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+        //이게 좀 이상한 구조이긴함.
+        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
     }
     
     //밥이랑 물 버튼 action이 사용하는 UItextField만 다르지 나머지는 반복임. 더 간단하게 쓸 수 있지 않을까?
@@ -67,6 +71,10 @@ class MainViewController: UIViewController {
             // 레벨은 따로 빼서 해보자
             tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
+            calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            
+            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            
             return
         }
         
@@ -77,7 +85,11 @@ class MainViewController: UIViewController {
         myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
         
         tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-
+        
+        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+        
+        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+        
     }
     
     @IBAction func drinkWaterButtonTapped(_ sender: UIButton) {
@@ -94,6 +106,10 @@ class MainViewController: UIViewController {
             // 레벨은 따로 빼서 해보자
             tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
+            calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            
+            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            
             return
         }
         
@@ -105,9 +121,145 @@ class MainViewController: UIViewController {
         // 레벨은 따로 빼서 해보자
         tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
         
+        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+        
+        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+        
     }
     
-    // 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
+    func loadTamagochiData() {
+        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+        
+        nameLabel.text = myTamagotchi.name
+        //MARK: - 이거 형태 더 다듬을 수 있을 듯
+        tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+    }
+    
+    func showUIContents(myTamagotchi: Tamagotchi) {
+        imageView.image = UIImage(named: myTamagotchi.type)
+        nameLabel.text = myTamagotchi.name
+    }
+    
+    func calculateLevel(rice: Int, water: Int) /*-> Int*/ {
+        let level = ((rice / 5) + (water / 2)) / 10
+        myTamgotchiLevel = level
+        //        return level
+    }
+    
+    func showTamagotchiImage(tamagotchiType: String ,level: Int)  {
+        
+        if tamagotchiType == TamagotchiSpecies.cactus.rawValue {
+            switch level {
+            case 0:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 1:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 2:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 3:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 4:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 5:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 6:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 7:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 8:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 9:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+            case 10...:
+                return imageView.image = UIImage(named: ImageAsset.cactusImage[10])
+            default:
+                return imageView.image = UIImage(named: "noImage")
+            }
+        } else if tamagotchiType == TamagotchiSpecies.sun.rawValue {
+            switch level {
+            case 0:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 1:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 2:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 3:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 4:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 5:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 6:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 7:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 8:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 9:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+            case 10...:
+                return imageView.image = UIImage(named: ImageAsset.sunImage[10])
+            default:
+                return imageView.image = UIImage(named: "noImage")
+            }
+        } else if tamagotchiType == TamagotchiSpecies.star.rawValue {
+            switch level {
+            case 0:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 1:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 2:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 3:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 4:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 5:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 6:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 7:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 8:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 9:
+                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+            case 10...:
+                return imageView.image = UIImage(named: ImageAsset.starImage[10])
+            default:
+                return imageView.image = UIImage(named: "noImage")
+            }
+        } else {
+            
+        }
+    }
+}
+
+//MARK: - 네비게이션바 설정
+extension MainViewController {
+    
+    func setNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingButtonTapped))
+        navigationItem.rightBarButtonItem?.tintColor = Design.fontAndBorderColor
+        
+        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
+            return self.navigationItem.title = "대장님의 다마고치"
+        }
+        
+        self.navigationItem.title = userName
+    }
+    
+    @objc func settingButtonTapped() {
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+//MARK: - 기본 UI Attributes 설정
+extension MainViewController {
+    //MARK: - 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
     func configurebubbleTextField() {
         bubbleTextField.borderStyle = .none
         bubbleTextField.background = UIImage(named: "bubble")
@@ -149,39 +301,5 @@ class MainViewController: UIViewController {
         button.layer.borderColor = Design.fontAndBorderColor.cgColor
         button.layer.borderWidth = 2
         button.layer.cornerRadius = 5
-    }
-    
-    func loadTamagochiData() {
-        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-        
-        nameLabel.text = myTamagotchi.name
-        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-    }
-    
-    func showUIContents(myTamagotchi: Tamagotchi) {
-        imageView.image = UIImage(named: myTamagotchi.type)
-        nameLabel.text = myTamagotchi.name
-    }
-}
-
-//MARK: - 네비게이션바 설정
-extension MainViewController {
-    
-    func setNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingButtonTapped))
-        navigationItem.rightBarButtonItem?.tintColor = Design.fontAndBorderColor
-        
-        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
-            return self.navigationItem.title = "대장님의 다마고치"
-        }
-        
-        self.navigationItem.title = userName
-    }
-    
-    @objc func settingButtonTapped() {
-        
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
-        
-        navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -14,52 +14,6 @@ enum TamagotchiSpecies: String {
     case sun
     case star
     case none
-    
-    // 쓰고싶은데 쓸 수 가 없네
-//    var imageAsset: [String] {
-//        switch self.rawValue {
-//        case "cactus":
-//            return ["1-1",
-//                    "1-1",
-//                    "1-2",
-//                    "1-3",
-//                    "1-4",
-//                    "1-5",
-//                    "1-6",
-//                    "1-7",
-//                    "1-8",
-//                    "1-9",
-//                    "1-9"]
-//        case "sun":
-//            return ["2-1",
-//                    "2-1",
-//                    "2-2",
-//                    "2-3",
-//                    "2-4",
-//                    "2-5",
-//                    "2-6",
-//                    "2-7",
-//                    "2-8",
-//                    "2-9",
-//                    "2-9"]
-//        case "star":
-//            return ["3-1",
-//                    "3-1",
-//                    "3-2",
-//                    "3-3",
-//                    "3-4",
-//                    "3-5",
-//                    "3-6",
-//                    "3-7",
-//                    "3-8",
-//                    "3-9",
-//                    "3-9"]
-//        case "none":
-//            return ["noImage"]
-//        default:
-//            return [""]
-//        }
-//    }
 }
 
 // 아마 다마고치가 id을 갖고 있어야 할 듯. 그래야 저장하고 불러올 수 있을 듯
@@ -68,11 +22,6 @@ struct Tamagotchi: Codable {
     var name: String
     var rice: Int
     var water: Int
-    
-    //이거 따로 빼서 구현하자
-//    var level: Int {
-//        return (rice / 5) + (water / 2) / 10
-//    }
 }
 
 struct TamagotchiList {
