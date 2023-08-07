@@ -5,17 +5,13 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
-//TODO: 타이틀 텍스트 컬러 바꾸면 됨.
-//1. textField에 숫자만 입력가능하도록. 그리고 키보드 타입 제한하기.
-//2. iqkeyboard 사용해서 키보드 올리고 아무때나 탭 하면 키보드 내려가게하기
-
 //레벨을 연산프로퍼티로 설정하고, set에서 이미지 설정 메서드 호출하는게 최종 버전일듯? 일단 둘 다 메서드로 구현해보자
 
 import UIKit
 
 class MainViewController: UIViewController {
     
-    var myTamagotchi: Tamagotchi = Tamagotchi(type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
+    var myTamagotchi: Tamagotchi = Tamagotchi(id: 0 ,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
     var myTamgotchiLevel: Int = 0 {
         didSet {
             //MARK: - 이거 좀 더 예쁘게 다듬어보자
@@ -42,6 +38,7 @@ class MainViewController: UIViewController {
         
         riceTextField.delegate = self
         waterTextField.delegate = self
+        
         
         configurebubbleTextField()
         configureNameLabelView()
@@ -74,31 +71,42 @@ class MainViewController: UIViewController {
             
             //이 저장과 불러와서 최신화 하는 걸 담당하는 메서드가 있으면 더 깔끔할 듯. 다만, key값 설정에 주의해야함.
             //키 값 바궈야함 객체 고유의 ID로
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
             
-            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+            myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
             // 레벨은 따로 빼서 해보자
-            tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            
+//            Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: <#T##Int#>)
             
             showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
             
             return
         }
         
-        myTamagotchi.rice += riceToEatInt
-        
-        Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
-        
-        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-        
-        tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-        
-        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
-        
-        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
-        
+        if riceToEatInt >= 100 {
+            let alert = UIAlertController(title: "알림", message: "밥은 한 번에 99개 까지 줄 수 있습니다.", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(okay)
+            present(alert, animated: true)
+            riceTextField.text = ""
+        } else {
+            myTamagotchi.rice += riceToEatInt
+            
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
+            
+            myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
+            
+            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            
+            calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            
+            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            
+            riceTextField.text = ""
+        }
     }
     
     @IBAction func drinkWaterButtonTapped(_ sender: UIButton) {
@@ -109,11 +117,11 @@ class MainViewController: UIViewController {
             
             myTamagotchi.water += 1
             
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
             
-            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-            // 레벨은 따로 빼서 해보자
-            tamagotchiStateLabel.text = "LV • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
+
+            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
@@ -131,20 +139,27 @@ class MainViewController: UIViewController {
         } else {
             myTamagotchi.water += waterToDrinkInt
             
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi, key: "ID")
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
             
-            myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
-            // 레벨은 따로 빼서 해보자
-            tamagotchiStateLabel.text = "LV \(myTamgotchiLevel)• 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
+            myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
+
+            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
             
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
             showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            
+            waterTextField.text = ""
         }
     }
     
+    
+    //MARK: - 여기서 레벨에 값 넣고, id 사용해서 UserDefaults에 저장된 객체 불러와서 프로퍼티에 할당하고,
     func loadTamagochiData() {
-        myTamagotchi = Methods.loadTamagotchiStruct(key: "ID")
+        
+        let id = UserDefaults.standard.integer(forKey: "ID")
+
+        myTamagotchi = Methods.loadTamagotchiStruct(key: id)
     }
     
     func showMyTamagotchiName() {
@@ -256,12 +271,12 @@ class MainViewController: UIViewController {
                 return imageView.image = UIImage(named: "noImage")
             }
         } else {
-            
+            imageView.image = UIImage(named: "noImage")
         }
     }
 }
 extension MainViewController: UITextFieldDelegate {
-
+    
     /// 이 메서드는 텍스트 필드에 어떤 값이 들어왔을 때마다 작동하며 반환값이 true이면, 그 값이 입력되고, false 이면 무시됨
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -276,44 +291,6 @@ extension MainViewController: UITextFieldDelegate {
             return false
         }
         return true
-        
-        //밥 텍스트 필드는 입력 중에 제한이 가능하나 두자리 숫자까지 입력 후 백스페이스를 누르면 3자리 입력한 버그 발생
-        //물 텍스트 필드는 49이하의 값을 받아오는걸 아직 못 짬
-//        guard let value = textField.text else { return true }
-//
-//        if textField.tag == 0 {
-//            if value.count >= 2 {
-//
-//                textField.resignFirstResponder()
-//
-//                let alert = UIAlertController(title: "알림", message: "밥은 99개 까지 줄 수 있습니다.", preferredStyle: .alert)
-//                let okay = UIAlertAction(title: "확인", style: .default)
-//                alert.addAction(okay)
-//                present(alert, animated: true)
-//
-//                textField.text = ""
-//
-//                return false
-//            } else {
-//                return true
-//            }
-//        } else { // tag == 1 일때
-////            var waterCount = 0
-//
-////            if number >= 50 {
-////                print(50)
-////                textField.resignFirstResponder()
-////
-////                let alert = UIAlertController(title: "알림", message: "물은 49개 까지 줄 수 있습니다.", preferredStyle: .alert)
-////                let okay = UIAlertAction(title: "확인", style: .default)
-////                alert.addAction(okay)
-////                present(alert, animated: true)
-////
-////                textField.text = ""
-////                return false
-////            }
-//            return true
-//        }
     }
 }
 

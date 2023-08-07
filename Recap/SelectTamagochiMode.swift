@@ -8,6 +8,6 @@
 import Foundation
 
 enum SelectTamagochiMode {
-    case first
+    case firstChoice
     case change
 }

@@ -54,9 +54,13 @@ extension SettingViewController: UITableViewDelegate {
             
             let vc = storyboard?.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
             
-            // UserDefaults 사용해서 최초 앱 실행인 경우와 아닌 경우로 구분해야함 이 값을 여기서 설정해야하는지는 잘 모르겟음.
-            
+        //1. 넘길때 화면 구분을 위한 식별자
             vc.mode = .change
+        //2. 네비게이션 타이틀 바꾸기
+            
+            //3. cellForItemAt에 for문에서 UserDefaults에 아이템 불러내서 tamagotchi list에 추가 후 이를 나타내기
+            //4. 팝업 뷰 바꾸기
+            //5. 루트뷰 교체
             
             navigationController?.pushViewController(vc, animated: true)
             
@@ -66,7 +70,7 @@ extension SettingViewController: UITableViewDelegate {
             
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             let okay = UIAlertAction(title: "확인", style: .default) // 여기에 클로저 추가해야함
-            // okay의 클로저에서는 데이터를 초기화 하는 기능이 구현되면 됨.
+            // okay의 클로저에서는 데이터를 초기화 하는 기능이 구현되면 됨. => for문 돌면서 UseerDefualts에 저장된 데이터의 water랑 rice를 0으로 저장 또는 TamagotchiList에 있는 객체로 저장
             // selectTamagotchiVC로 돌아가며 시작화면 전환 UserDefaults 값 바꾸고
             // UserDefautls에 저장되어있는 다마고치의 모든 값 날리기
             

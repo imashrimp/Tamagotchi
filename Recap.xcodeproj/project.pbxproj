@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		173B67002A7F501A00B9928F /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 173B66FF2A7F501A00B9928F /* IQKeyboardManagerSwift */; };
-		1756BD872A7FB61E00C72E5F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1756BD862A7FB61E00C72E5F /* Extensions.swift */; };
 		17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */; };
 		17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43712A7CCF420072FEA7 /* SceneDelegate.swift */; };
 		17BE43772A7CCF420072FEA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17BE43752A7CCF420072FEA7 /* Main.storyboard */; };
@@ -26,12 +25,11 @@
 		17BE43A72A7D31C20072FEA7 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17BE43A52A7D31C20072FEA7 /* SettingTableViewCell.xib */; };
 		17BE43A92A7D343E0072FEA7 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43A82A7D343E0072FEA7 /* SettingModel.swift */; };
 		17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */; };
-		17BE43AD2A7E6C020072FEA7 /* ModeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* ModeID.swift */; };
+		17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */; };
 		17BE43B12A7F20550072FEA7 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43B02A7F20550072FEA7 /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1756BD862A7FB61E00C72E5F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = SOURCE_ROOT; };
 		17BE436C2A7CCF420072FEA7 /* Recap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17BE43712A7CCF420072FEA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,7 +49,7 @@
 		17BE43A52A7D31C20072FEA7 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingTableViewCell.xib; path = Recap/XIB/SettingTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		17BE43A82A7D343E0072FEA7 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameViewController.swift; sourceTree = "<group>"; };
-		17BE43AC2A7E6C020072FEA7 /* ModeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeID.swift; sourceTree = "<group>"; };
+		17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTamagochiMode.swift; sourceTree = "<group>"; };
 		17BE43B02A7F20550072FEA7 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -86,11 +84,10 @@
 		17BE436E2A7CCF420072FEA7 /* Recap */ = {
 			isa = PBXGroup;
 			children = (
-				1756BD862A7FB61E00C72E5F /* Extensions.swift */,
 				17BE43B02A7F20550072FEA7 /* Test.swift */,
 				17BE43A42A7D31C20072FEA7 /* SettingTableViewCell.swift */,
 				17BE43A22A7D30730072FEA7 /* SettingViewController.swift */,
-				17BE43AC2A7E6C020072FEA7 /* ModeID.swift */,
+				17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */,
 				17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */,
 				17BE43712A7CCF420072FEA7 /* SceneDelegate.swift */,
 				17BE43752A7CCF420072FEA7 /* Main.storyboard */,
@@ -244,12 +241,11 @@
 				17BE43B12A7F20550072FEA7 /* Test.swift in Sources */,
 				17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */,
 				17BE43942A7CEC5A0072FEA7 /* AssetSingleton.swift in Sources */,
-				17BE43AD2A7E6C020072FEA7 /* ModeID.swift in Sources */,
+				17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */,
 				17BE43872A7CDDC90072FEA7 /* TamagotchiCollectionViewCell.swift in Sources */,
 				17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */,
 				17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */,
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,
-				1756BD872A7FB61E00C72E5F /* Extensions.swift in Sources */,
 				17BE43A62A7D31C20072FEA7 /* SettingTableViewCell.swift in Sources */,
 				17BE43842A7CDD2F0072FEA7 /* SelectTamagotchiViewController.swift in Sources */,
 				17BE438A2A7CE2850072FEA7 /* Protocol.swift in Sources */,
