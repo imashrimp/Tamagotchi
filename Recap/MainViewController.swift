@@ -5,16 +5,15 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
-//레벨을 연산프로퍼티로 설정하고, set에서 이미지 설정 메서드 호출하는게 최종 버전일듯? 일단 둘 다 메서드로 구현해보자
 
 import UIKit
 
 class MainViewController: UIViewController {
     
-    var myTamagotchi: Tamagotchi = Tamagotchi(id: 0 ,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
+    var myTamagotchiID: Int?
+    var myTamagotchi: Tamagotchi = Tamagotchi(id: 0,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
     var myTamgotchiLevel: Int = 0 {
         didSet {
-            //MARK: - 이거 좀 더 예쁘게 다듬어보자
             bubbleTextField.text = sentenceArray.randomElement()
         }
     }
@@ -39,7 +38,6 @@ class MainViewController: UIViewController {
         riceTextField.delegate = self
         waterTextField.delegate = self
         
-        
         configurebubbleTextField()
         configureNameLabelView()
         configureTamagotchiNameLabel()
@@ -53,35 +51,26 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBar()
+        
         loadTamagochiData()
-        showMyTamagotchiName()
-        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
-        showMyTamagotchiStatement()
-        //이게 좀 이상한 구조이긴함.
-        showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+        
+        let id = UserDefaults.standard.integer(forKey: "ID")
+        updateTamagotchi(id: id)
     }
     
-    //밥이랑 물 버튼 action이 사용하는 UItextField만 다르지 나머지는 반복임. 더 간단하게 쓸 수 있지 않을까?
+    
+
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
         
         guard let riceToEat = riceTextField.text else { return }
         
         guard let riceToEatInt = Int(riceToEat) else {
+            
             myTamagotchi.rice += 1
             
-            //이 저장과 불러와서 최신화 하는 걸 담당하는 메서드가 있으면 더 깔끔할 듯. 다만, key값 설정에 주의해야함.
-            //키 값 바궈야함 객체 고유의 ID로
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
-            
-            myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
-            // 레벨은 따로 빼서 해보자
-            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-            
-            calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
-            
-//            Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: <#T##Int#>)
-            
-            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
+           
+            updateTamagotchi(id: myTamagotchi.id)
             
             return
         }
@@ -95,15 +84,15 @@ class MainViewController: UIViewController {
         } else {
             myTamagotchi.rice += riceToEatInt
             
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
-            
-            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-            
+
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
-            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            showMyTamagotchiStatement()
+            
+            Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
             
             riceTextField.text = ""
         }
@@ -117,16 +106,16 @@ class MainViewController: UIViewController {
             
             myTamagotchi.water += 1
             
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
 
-            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-            
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
-            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            showMyTamagotchiStatement()
             
+            Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+
             return
         }
         
@@ -139,27 +128,38 @@ class MainViewController: UIViewController {
         } else {
             myTamagotchi.water += waterToDrinkInt
             
-            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi/*, key: "ID"*/)
+            Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
 
-            tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
-            
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+            print(myTamgotchiLevel)
+            showMyTamagotchiStatement()
             
-            showTamagotchiImage(tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
-            
+            Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+                        
             waterTextField.text = ""
         }
     }
     
-    
-    //MARK: - 여기서 레벨에 값 넣고, id 사용해서 UserDefaults에 저장된 객체 불러와서 프로퍼티에 할당하고,
-    func loadTamagochiData() {
-        
-        let id = UserDefaults.standard.integer(forKey: "ID")
-
+    func updateTamagotchi(id: Int) {
         myTamagotchi = Methods.loadTamagotchiStruct(key: id)
+        showMyTamagotchiName()
+        calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
+        showMyTamagotchiStatement()
+        Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+    }
+    
+    func loadTamagochiData() {
+        // 최초 실행 시
+        guard let id = myTamagotchiID else {
+            print("최초가 아닌 경우 \(myTamagotchiID)")
+            let savedID = UserDefaults.standard.integer(forKey: "ID")
+            updateTamagotchi(id: savedID)
+            return
+        }
+        print("최초인 경우 \(id)")
+        Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
     }
     
     func showMyTamagotchiName() {
@@ -167,7 +167,6 @@ class MainViewController: UIViewController {
     }
     
     func showMyTamagotchiStatement() {
-        //MARK: - 이거 형태 더 다듬을 수 있을 듯
         
         tamagotchiStateLabel.text = "LV\(myTamgotchiLevel) • 밥알  \(myTamagotchi.rice)개 • 물방울  \(myTamagotchi.water)개"
     }
@@ -177,110 +176,109 @@ class MainViewController: UIViewController {
         nameLabel.text = myTamagotchi.name
     }
     
-    func calculateLevel(rice: Int, water: Int) /*-> Int*/ {
-        var level = ((rice / 5) + (water / 2)) / 10
-        if level >= 10 {
-            level = 10
-            myTamgotchiLevel = level
+    func calculateLevel(rice: Int, water: Int) {
+        let level = ((rice / 5) + (water / 2)) / 10
+        if level < 1 {
+            myTamgotchiLevel = 1
+        } else if level >= 10 {
+            myTamgotchiLevel = 10
         } else {
             myTamgotchiLevel = level
         }
     }
     
     func showTamagotchiImage(tamagotchiType: String ,level: Int)  {
-        
-        if tamagotchiType == TamagotchiSpecies.cactus.rawValue {
-            switch level {
-            case 0:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 1:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 2:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 3:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 4:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 5:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 6:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 7:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 8:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 9:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
-            case 10...:
-                return imageView.image = UIImage(named: ImageAsset.cactusImage[10])
-            default:
-                return imageView.image = UIImage(named: "noImage")
-            }
-        } else if tamagotchiType == TamagotchiSpecies.sun.rawValue {
-            switch level {
-            case 0:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 1:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 2:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 3:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 4:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 5:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 6:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 7:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 8:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 9:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
-            case 10...:
-                return imageView.image = UIImage(named: ImageAsset.sunImage[10])
-            default:
-                return imageView.image = UIImage(named: "noImage")
-            }
-        } else if tamagotchiType == TamagotchiSpecies.star.rawValue {
-            switch level {
-            case 0:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 1:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 2:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 3:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 4:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 5:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 6:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 7:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 8:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 9:
-                return imageView.image = UIImage(named: ImageAsset.starImage[level])
-            case 10...:
-                return imageView.image = UIImage(named: ImageAsset.starImage[10])
-            default:
-                return imageView.image = UIImage(named: "noImage")
-            }
-        } else {
-            imageView.image = UIImage(named: "noImage")
-        }
+
+//        if tamagotchiType == TamagotchiSpecies.cactus.rawValue {
+//            switch level {
+//            case 0:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 1:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 2:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 3:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 4:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 5:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 6:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 7:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 8:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 9:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[level])
+//            case 10...:
+//                return imageView.image = UIImage(named: ImageAsset.cactusImage[10])
+//            default:
+//                return imageView.image = UIImage(named: "noImage")
+//            }
+//        } else if tamagotchiType == TamagotchiSpecies.sun.rawValue {
+//            switch level {
+//            case 0:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 1:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 2:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 3:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 4:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 5:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 6:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 7:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 8:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 9:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[level])
+//            case 10...:
+//                return imageView.image = UIImage(named: ImageAsset.sunImage[10])
+//            default:
+//                return imageView.image = UIImage(named: "noImage")
+//            }
+//        } else if tamagotchiType == TamagotchiSpecies.star.rawValue {
+//            switch level {
+//            case 0:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 1:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 2:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 3:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 4:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 5:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 6:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 7:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 8:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 9:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[level])
+//            case 10...:
+//                return imageView.image = UIImage(named: ImageAsset.starImage[10])
+//            default:
+//                return imageView.image = UIImage(named: "noImage")
+//            }
+//        } else {
+//            imageView.image = UIImage(named: "noImage")
+//        }
     }
 }
 extension MainViewController: UITextFieldDelegate {
     
-    /// 이 메서드는 텍스트 필드에 어떤 값이 들어왔을 때마다 작동하며 반환값이 true이면, 그 값이 입력되고, false 이면 무시됨
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        ///와일드 카드 식별자가 원래 의도는 number라는 상수로 두고 waterTextField의 값을 49이하로 제한할 때 사용하려 했음
         guard let _ = Int(string) else {
             let alert = UIAlertController(title: "알림", message: "숫자만 입력해주세요.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default)
@@ -318,7 +316,7 @@ extension MainViewController {
 
 //MARK: - 기본 UI Attributes 설정
 extension MainViewController {
-    //MARK: - 이거는 문구 총 5~6개정도 하고, 원시값(Int)을 갖는 enum의 사용해 연산 프로퍼티로 문구가 나타나게 해보자
+
     func configurebubbleTextField() {
         bubbleTextField.borderStyle = .none
         bubbleTextField.background = UIImage(named: "bubble")

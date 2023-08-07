@@ -27,9 +27,9 @@ struct Tamagotchi: Codable {
 
 struct TamagotchiList {
     var tamagotchi: [Tamagotchi] =
-[Tamagotchi(id: 0,type: TamagotchiSpecies.cactus.rawValue, name: "선인장", rice: 10, water: 1),
- Tamagotchi(id: 1,type: TamagotchiSpecies.sun.rawValue, name: "태양", rice: 8, water: 7),
- Tamagotchi(id: 2,type: TamagotchiSpecies.star.rawValue, name: "별", rice: 3, water: 0),
+[Tamagotchi(id: 0,type: TamagotchiSpecies.cactus.rawValue, name: "선인장", rice: 0, water: 0),
+ Tamagotchi(id: 1,type: TamagotchiSpecies.sun.rawValue, name: "태양", rice: 0, water: 0),
+ Tamagotchi(id: 2,type: TamagotchiSpecies.star.rawValue, name: "별", rice: 0, water: 0),
  Tamagotchi(id: 3,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0),
  Tamagotchi(id: 4,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0),
  Tamagotchi(id: 5,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0),

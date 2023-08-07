@@ -30,6 +30,11 @@ class SettingViewController: UIViewController {
         settingTableView.register(nib, forCellReuseIdentifier: "SettingTableViewCell")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        settingTableView.reloadData()
+    }
+    
     func setNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "lessthan"), style: .plain, target: self, action: #selector(popNavController))
         navigationItem.leftBarButtonItem?.tintColor = Design.fontAndBorderColor
@@ -54,13 +59,8 @@ extension SettingViewController: UITableViewDelegate {
             
             let vc = storyboard?.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
             
-        //1. 넘길때 화면 구분을 위한 식별자
+        //1. 넘길때 다마고치 변경화면 설정을 위한 식별자
             vc.mode = .change
-        //2. 네비게이션 타이틀 바꾸기
-            
-            //3. cellForItemAt에 for문에서 UserDefaults에 아이템 불러내서 tamagotchi list에 추가 후 이를 나타내기
-            //4. 팝업 뷰 바꾸기
-            //5. 루트뷰 교체
             
             navigationController?.pushViewController(vc, animated: true)
             
@@ -69,18 +69,24 @@ extension SettingViewController: UITableViewDelegate {
             let alert = UIAlertController(title: "데이터 초기화", message: #""확인"버튼을 누르면 데이터가 초기화 됩니다. "#, preferredStyle: .alert)
             
             let cancel = UIAlertAction(title: "취소", style: .cancel)
-            let okay = UIAlertAction(title: "확인", style: .default) // 여기에 클로저 추가해야함
-            // okay의 클로저에서는 데이터를 초기화 하는 기능이 구현되면 됨. => for문 돌면서 UseerDefualts에 저장된 데이터의 water랑 rice를 0으로 저장 또는 TamagotchiList에 있는 객체로 저장
-            // selectTamagotchiVC로 돌아가며 시작화면 전환 UserDefaults 값 바꾸고
-            // UserDefautls에 저장되어있는 다마고치의 모든 값 날리기
-            
+            let okay = UIAlertAction(title: "확인", style: .default) { okay in
+                UserDefaults.standard.set(false, forKey: "launched")
+                
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
+                let nav = UINavigationController(rootViewController: vc)
+
+                sceneDelegate?.window?.rootViewController = nav
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }
             alert.addAction(cancel)
             alert.addAction(okay)
-            // 팝업 화면의 확인버튼의 경우에는 앱 최초 실행시에는 Main화면으로 push, 변경의 경우에는 루트뷰 변경 작동하게 구현해 MainVC로 화면전환 되도록
             
             present(alert, animated: true)
-            
-            //=> 쉽게 말하면 앱 최초 실행상태로 돌리면 됨
         }
         
     }

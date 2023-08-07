@@ -27,6 +27,7 @@
 		17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */; };
 		17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */; };
 		17BE43B12A7F20550072FEA7 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43B02A7F20550072FEA7 /* Test.swift */; };
+		17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameViewController.swift; sourceTree = "<group>"; };
 		17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTamagochiMode.swift; sourceTree = "<group>"; };
 		17BE43B02A7F20550072FEA7 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = SOURCE_ROOT; };
+		17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				17BE43782A7CCF430072FEA7 /* Assets.xcassets */,
 				17BE437A2A7CCF430072FEA7 /* LaunchScreen.storyboard */,
 				17BE437D2A7CCF430072FEA7 /* Info.plist */,
+				17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */,
 			);
 			path = Recap;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */,
 				17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */,
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,
+				17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */,
 				17BE43A62A7D31C20072FEA7 /* SettingTableViewCell.swift in Sources */,
 				17BE43842A7CDD2F0072FEA7 /* SelectTamagotchiViewController.swift in Sources */,
 				17BE438A2A7CE2850072FEA7 /* Protocol.swift in Sources */,
