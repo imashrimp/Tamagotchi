@@ -138,7 +138,6 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TamagotchiCollectionViewCell", for: indexPath) as! TamagotchiCollectionViewCell
         
         if mode == .firstChoice {
-            //MARK: - 레벨 계산 여기서 하는거 좀 별론데
             
             var myTamgotichLevel: Int {
                 return ((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10

@@ -50,12 +50,12 @@ class SettingViewController: UIViewController {
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.row == 0 {         /// 사용자 이름 변경 화면 전환
+        if indexPath.row == 0 {
             let vc = storyboard?.instantiateViewController(withIdentifier: "ChangeUserNameViewController") as! ChangeUserNameViewController
             
             navigationController?.pushViewController(vc, animated: true)
             
-        } else if indexPath.row == 1 { // 다마고치 변경 화면 전환
+        } else if indexPath.row == 1 {
             
             let vc = storyboard?.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
             
@@ -104,7 +104,7 @@ extension SettingViewController: UITableViewDataSource {
         cell.setUIContents(item: cellItem.list[indexPath.row])
         
         if indexPath.row == 0 {
-            // 이게 아니면 애초에
+            
             if let userName = UserDefaults.standard.string(forKey: "userName") {
                 cell.cellSubTitleLabel.text = userName
             } else {

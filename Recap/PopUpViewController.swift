@@ -41,8 +41,6 @@ class PopUpViewController: UIViewController {
         
         Methods.saveTamagotchiStruct(tamagotchi: selectedTamago)
         
-        print(selectedTamago)
-        
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         
         let sceneDelegate = windowScene?.delegate as? SceneDelegate

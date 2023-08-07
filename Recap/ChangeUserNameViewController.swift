@@ -40,7 +40,6 @@ class ChangeUserNameViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveUserName))
     }
     
-    // 팝업창 띄워서 확인 누르면 저장되고 취소 누르면 저장 안 되도록
     @objc func saveUserName() {
         guard let userName = userNameTextField.text else { return }
         

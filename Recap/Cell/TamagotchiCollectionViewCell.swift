@@ -5,8 +5,6 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
-//프로토콜 만들어서 셀 내부 UI의 컨텐츠 설정하는 메서드 선언하고 여기서 채택하자
-
 import UIKit
 
 class TamagotchiCollectionViewCell: UICollectionViewCell, CollectionCellContentsConfigure {
