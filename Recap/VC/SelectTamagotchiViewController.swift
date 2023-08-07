@@ -140,8 +140,7 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
         if mode == .firstChoice {
             
             var myTamgotichLevel: Int {
-                return ((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10
-            }
+                return Int(((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10)            }
             
             Methods.showTamagotchiImage(imageView: cell.tamagotchiImage, tamagotchiType: tamagotchiList[indexPath.row].type, level: myTamgotichLevel)
             
@@ -152,7 +151,7 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
         } else {
             
             var myTamgotichLevel: Int {
-                return ((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10
+                return Int(((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10)
             }
             
             Methods.showTamagotchiImage(imageView: cell.tamagotchiImage, tamagotchiType: tamagotchiList[indexPath.row].type, level: myTamgotichLevel)

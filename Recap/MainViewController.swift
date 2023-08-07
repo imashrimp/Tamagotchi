@@ -62,7 +62,7 @@ class MainViewController: UIViewController {
         
         guard let riceToEat = riceTextField.text else { return }
         
-        guard let riceToEatInt = Int(riceToEat) else {
+        guard let riceToEatInt = Double(riceToEat) else {
             
             myTamagotchi.rice += 1
             
@@ -107,7 +107,7 @@ class MainViewController: UIViewController {
         
         guard let waterToDrink = waterTextField.text else { return }
         
-        guard let waterToDrinkInt = Int(waterToDrink) else {
+        guard let waterToDrinkInt = Double(waterToDrink) else {
             
             myTamagotchi.water += 1
             
@@ -198,14 +198,15 @@ class MainViewController: UIViewController {
         nameLabel.text = myTamagotchi.name
     }
     
-    func calculateLevel(rice: Int, water: Int) {
+    func calculateLevel(rice: Double, water: Double) {
         let level = ((rice / 5) + (water / 2)) / 10
-        if level < 1 {
+        let levelInINt = Int(level)
+        if levelInINt < 1 {
             myTamgotchiLevel = 1
         } else if level >= 10 {
             myTamgotchiLevel = 10
         } else {
-            myTamgotchiLevel = level
+            myTamgotchiLevel = levelInINt
         }
     }
 }

@@ -87,7 +87,9 @@ class PopUpViewController: UIViewController {
     func showImage() {
         let level = ((selectedTamago.rice / 5) + (selectedTamago.water / 2)) / 10
         
-        Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: selectedTamago.type, level: level)
+        let levelInInt = Int(level)
+        
+        Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: selectedTamago.type, level: levelInInt)
     }
     
     func setLabelContents() {
