@@ -198,15 +198,18 @@ class MainViewController: UIViewController {
     }
     
     func calculateLevel(rice: Int, water: Int) {
-        // 여기 내부에서 rice와 water를 double로 타입 캐스팅 후 레벨을 계산하고, 계산된 레벨을 다시 Int타입으로 캐스팅 해서, 반환
-        let level = ((rice / 5) + (water / 2)) / 10
-        let levelInINt = Int(level)
-        if levelInINt < 1 {
+        
+        let riceDouble = Double(rice)
+        let waterDouble = Double(water)
+        
+        let levelDouble = ((riceDouble / 5) + (riceDouble / 2)) / 10
+        let level = Int(levelDouble)
+        if level < 1 {
             myTamgotchiLevel = 1
         } else if level >= 10 {
             myTamgotchiLevel = 10
         } else {
-            myTamgotchiLevel = levelInINt
+            myTamgotchiLevel = level
         }
     }
 }
