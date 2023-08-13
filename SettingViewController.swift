@@ -59,7 +59,9 @@ extension SettingViewController: UITableViewDelegate {
             
         } else if indexPath.row == 1 {
             
-            let vc = storyboard?.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
+            let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
+            
+            let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
             
         //1. 넘길때 다마고치 변경화면 설정을 위한 식별자
             vc.mode = .change

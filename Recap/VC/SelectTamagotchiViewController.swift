@@ -68,13 +68,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
             if tamagotchiList[indexPath.row].type == TamagotchiSpecies.none.rawValue {
                 
-                let alert = UIAlertController(title: "알림", message: "다마고치가 준비되지 않았습니다.", preferredStyle: .alert)
-                
-                let okay = UIAlertAction(title: "확인", style: .default)
-                
-                alert.addAction(okay)
-                
-                present(alert, animated: true)
+                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
                 
             } else {
                 
@@ -92,30 +86,21 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
             if tamagotchiList[indexPath.row].type == TamagotchiSpecies.none.rawValue {
                 
-                let alert = UIAlertController(title: "알림", message: "다마고치가 준비되지 않았습니다.", preferredStyle: .alert)
-                
-                let okay = UIAlertAction(title: "확인", style: .default)
-                
-                alert.addAction(okay)
-                
-                present(alert, animated: true)
+                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
                 
             } else {
-                
-                if tamagotchiList[indexPath.row].id == UserDefaults.standard.integer(forKey: "ID") {
-                    let alert = UIAlertController(title: "알림", message: "현재 키우고 있는 다마고치 입니다.\n다른 다마고치를 선택해주세요", preferredStyle: .alert)
+                // 여기가 안됨
+                //다마고치 데이터 모델이 갖고 있는 id와 UserDefaults에서 갖고 있는 id가 같으면 얼럿을 띄운다
+                //그렇다면 이 시점 이전에 UserDefaults에 "ID"라는 키로 저장된 값이 있음. 이걸 찾아라 => popUp에 전달된 값에서 "ID"값을 저장함.
+                if tamagotchiList[indexPath.row].id == UserDefaults.standard.integer(forKey: TamagoID.shared.id) {
                     
-                    let okay = UIAlertAction(title: "확인", style: .default)
-                    
-                    alert.addAction(okay)
-                    
-                    present(alert, animated: true)
+                    okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
                     
                 } else {
                     
                     let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                     
-                    let popUpVC = sb.instantiateViewController(withIdentifier: StoryboardName.popUp.rawValue) as! PopUpViewController
+                    let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue) as! PopUpViewController
                     
                     popUpVC.modalPresentationStyle = .overFullScreen
                     

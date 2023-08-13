@@ -47,11 +47,11 @@ class PopUpViewController: UIViewController {
         
         UserDefaults.standard.set(true, forKey: "launched")
         
-        let sb = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+        let sb = UIStoryboard(name: StoryboardName.main.rawValue, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: VCName.main.rawValue) as! MainViewController
         let nav = UINavigationController(rootViewController: vc)
-        
-        UserDefaults.standard.set(selectedTamago.id, forKey: "ID")
+
+        UserDefaults.standard.set(selectedTamago.id, forKey: TamagoID.shared.id)
         vc.myTamagotchiID = selectedTamago.id
         vc.myTamagotchi = selectedTamago
         

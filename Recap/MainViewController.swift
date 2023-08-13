@@ -12,6 +12,9 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    //MARK: - id 중복 사용 하지말고 데이터 구조체 내부의 id만 사용해서 해보자.
+    //1. 데이터 전달하는데(selectTamagotchiVC)에서 바꾸기 시작.
+    //2. MainVC에서 사용하는 부분에서 수정
     var myTamagotchiID: Int?
     var myTamagotchi: Tamagotchi = Tamagotchi(id: 0,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
     var myTamgotchiLevel: Int = 0 {
@@ -57,7 +60,7 @@ class MainViewController: UIViewController {
         
         loadTamagochiData()
         
-        let id = UserDefaults.standard.integer(forKey: "ID")
+        let id = UserDefaults.standard.integer(forKey: TamagoID.shared.id)
         updateTamagotchi(id: id)
     }
 
@@ -77,13 +80,7 @@ class MainViewController: UIViewController {
         
         if riceToEat >= 100 {
             
-            let alert = UIAlertController(title: "알림", message: "밥은 한 번에 99개 까지 줄 수 있습니다.", preferredStyle: .alert)
-            
-            let okay = UIAlertAction(title: "확인", style: .default)
-            
-            alert.addAction(okay)
-            
-            present(alert, animated: true)
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "밥은 한 번에 99개 까지 줄 수 있습니다.")
             
             riceTextField.text = ""
             
@@ -102,6 +99,7 @@ class MainViewController: UIViewController {
             Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
             
             riceTextField.text = ""
+            
         }
     }
     
@@ -124,14 +122,8 @@ class MainViewController: UIViewController {
         }
         
         if waterToDrink >= 50 {
-            let alert = UIAlertController(title: "알림", message: "물은 한 번에 49개 까지 줄 수 있습니다.", preferredStyle: .alert)
             
-            
-            let okay = UIAlertAction(title: "확인", style: .default)
-            
-            alert.addAction(okay)
-            
-            present(alert, animated: true)
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "물은 한 번에 49개 까지 줄 수 있습니다.")
             
             waterTextField.text = ""
             
@@ -171,7 +163,7 @@ class MainViewController: UIViewController {
         
         guard let _ = myTamagotchiID else {
             
-            let savedID = UserDefaults.standard.integer(forKey: "ID")
+            let savedID = UserDefaults.standard.integer(forKey: TamagoID.shared.id)
             
             updateTamagotchi(id: savedID)
             
@@ -197,6 +189,7 @@ class MainViewController: UIViewController {
         nameLabel.text = myTamagotchi.name
     }
     
+    //MARK: - 이것도 위치를 옮겨보자 타입 메서드로 만들어서
     func calculateLevel(rice: Int, water: Int) {
         
         let riceDouble = Double(rice)
@@ -219,12 +212,11 @@ extension MainViewController: UITextFieldDelegate {
         
         //MARK: - 여기도 타입을 Double로 바꿔야함.
         guard let _ = Int(string) else {
-            let alert = UIAlertController(title: "알림", message: "숫자만 입력해주세요.", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .default)
             
-            alert.addAction(ok)
-            present(alert, animated: true)
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "숫자만 입력해주세요.")
+            
             textField.text = ""
+            
             return false
         }
         return true
