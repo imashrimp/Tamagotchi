@@ -35,6 +35,7 @@ struct Methods {
     }
     
     static func showTamagotchiImage(imageView: UIImageView, tamagotchiType: String ,level: Int)  {
+        //MARK: - 여기에 있는 switch문을 메서드로 바꾸고 해당 메서드가 UIImageName의 값을 전달인자로 받는 형태로 만들어보자
         if tamagotchiType == TamagotchiSpecies.cactus.rawValue {
             switch level {
             case 0:

@@ -5,6 +5,8 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
+//1. 밥, 물을 Int값으로 저장하고, 계산 메서드 내부에서 이를 Double로 타입캐스팅해서 게산 후 double 타입의 level을 Int값으로 타입캐스팅 해서 나타내기
+//2. 밥, 물을 Double값으로 저장하고, 입력값을 Int로 타입 => 이걸 하려면 우선 저장 시에 double이 못 들어가게 해야함. 그리고 계산 시에 레벨을 Int타입으로 캐스팅 해야함. 
 
 import UIKit
 
@@ -61,20 +63,19 @@ class MainViewController: UIViewController {
 
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
         
-        guard let riceToEat = riceTextField.text else { return }
-        
-        guard let riceToEatInt = Double(riceToEat) else {
+        //Sting? -> String -> Int? -> Int => 텍스트필드가 비었을 경우, 데이터를 Int로 타입캐스팅 하면, nil값을 반환하므로 빈 텍스트 필드 상태에서 버튼을 눌렀을 때 값이 1만 올라가는 기능을 guard let 구문 사용 시 {}의 내부에서 해면 됨.
+        guard let riceToEatString = riceTextField.text, let riceToEat = Int(riceToEatString) else {
             
             myTamagotchi.rice += 1
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
            
             updateTamagotchi(id: myTamagotchi.id)
-            
+           
             return
         }
         
-        if riceToEatInt >= 100 {
+        if riceToEat >= 100 {
             
             let alert = UIAlertController(title: "알림", message: "밥은 한 번에 99개 까지 줄 수 있습니다.", preferredStyle: .alert)
             
@@ -88,7 +89,7 @@ class MainViewController: UIViewController {
             
         } else {
             
-            myTamagotchi.rice += riceToEatInt
+            myTamagotchi.rice += riceToEat
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
@@ -106,10 +107,8 @@ class MainViewController: UIViewController {
     
     @IBAction func drinkWaterButtonTapped(_ sender: UIButton) {
         
-        guard let waterToDrink = waterTextField.text else { return }
-        
-        guard let waterToDrinkInt = Double(waterToDrink) else {
-            
+        guard let waterToDrinkString = waterTextField.text, let waterToDrink = Int(waterToDrinkString) else {
+            // 여기를 텍스트 필드의 값이 없을때만 타는가 아니면 타입캐스팅에 실패했을 때도 타는가?
             myTamagotchi.water += 1
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
@@ -121,11 +120,10 @@ class MainViewController: UIViewController {
             showMyTamagotchiStatement()
             
             Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
-
             return
         }
         
-        if waterToDrinkInt >= 50 {
+        if waterToDrink >= 50 {
             let alert = UIAlertController(title: "알림", message: "물은 한 번에 49개 까지 줄 수 있습니다.", preferredStyle: .alert)
             
             
@@ -139,7 +137,7 @@ class MainViewController: UIViewController {
             
         } else {
             
-            myTamagotchi.water += waterToDrinkInt
+            myTamagotchi.water += waterToDrink
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
@@ -199,7 +197,8 @@ class MainViewController: UIViewController {
         nameLabel.text = myTamagotchi.name
     }
     
-    func calculateLevel(rice: Double, water: Double) {
+    func calculateLevel(rice: Int, water: Int) {
+        // 여기 내부에서 rice와 water를 double로 타입 캐스팅 후 레벨을 계산하고, 계산된 레벨을 다시 Int타입으로 캐스팅 해서, 반환
         let level = ((rice / 5) + (water / 2)) / 10
         let levelInINt = Int(level)
         if levelInINt < 1 {
@@ -215,6 +214,7 @@ extension MainViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
+        //MARK: - 여기도 타입을 Double로 바꿔야함.
         guard let _ = Int(string) else {
             let alert = UIAlertController(title: "알림", message: "숫자만 입력해주세요.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default)
@@ -248,13 +248,16 @@ extension MainViewController {
         let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
         //MARK: - 타입 캐스팅 바인딩으로
+//        guard let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) else { return }
+//        vc as
+        
         let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) as! SettingViewController
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-//MARK: - 기본 UI Attributes 설정
+//MARK: - 기본 UI Attributes 설정 => 이거 extension UIViecontroller를 만들어서 해보자
 extension MainViewController {
 
     func configurebubbleTextField() {

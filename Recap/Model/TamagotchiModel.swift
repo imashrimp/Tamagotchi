@@ -19,8 +19,8 @@ struct Tamagotchi: Codable {
     let id: Int
     var type: String
     var name: String
-    var rice: Double
-    var water: Double
+    var rice: Int
+    var water: Int
 }
 
 struct TamagotchiList {
