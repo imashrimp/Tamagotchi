@@ -26,8 +26,8 @@ class SettingViewController: UIViewController {
         
         settingTableView.rowHeight = 70
         
-        let nib = UINib(nibName: "SettingTableViewCell", bundle: nil)
-        settingTableView.register(nib, forCellReuseIdentifier: "SettingTableViewCell")
+        let nib = UINib(nibName: CellName.settingCell.rawValue, bundle: nil)
+        settingTableView.register(nib, forCellReuseIdentifier: CellName.settingCell.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,13 +51,15 @@ extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ChangeUserNameViewController") as! ChangeUserNameViewController
             
-            navigationController?.pushViewController(vc, animated: true)
+            let sb = UIStoryboard(name: StoryboardName.changeUserName.rawValue, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: VCName.ChangeUserName.rawValue)
+            
+            self.navigationController?.pushViewController(vc, animated: true)
             
         } else if indexPath.row == 1 {
             
-            let vc = storyboard?.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
             
         //1. 넘길때 다마고치 변경화면 설정을 위한 식별자
             vc.mode = .change
@@ -77,7 +79,7 @@ extension SettingViewController: UITableViewDelegate {
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 
                 let sb = UIStoryboard(name: "Main", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
+                let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
                 let nav = UINavigationController(rootViewController: vc)
 
                 sceneDelegate?.window?.rootViewController = nav
@@ -99,7 +101,7 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell") as! SettingTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellName.settingCell.rawValue) as! SettingTableViewCell
         
         cell.setUIContents(item: cellItem.list[indexPath.row])
         

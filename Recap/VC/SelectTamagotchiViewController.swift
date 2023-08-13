@@ -78,9 +78,9 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                 
             } else {
                 
-                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                 
-                let popUpVC = sb.instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+                let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue ) as! PopUpViewController
                 
                 popUpVC.modalPresentationStyle = .overFullScreen
                 
@@ -113,9 +113,9 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                     
                 } else {
                     
-                    let sb = UIStoryboard(name: "Main", bundle: nil)
+                    let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                     
-                    let popUpVC = sb.instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+                    let popUpVC = sb.instantiateViewController(withIdentifier: StoryboardName.popUp.rawValue) as! PopUpViewController
                     
                     popUpVC.modalPresentationStyle = .overFullScreen
                     
@@ -135,7 +135,7 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TamagotchiCollectionViewCell", for: indexPath) as! TamagotchiCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellName.selectTamagoCell.rawValue, for: indexPath) as! TamagotchiCollectionViewCell
         
         if mode == .firstChoice {
             
@@ -167,8 +167,8 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
 extension SelectTamagotchiViewController: CollectionCellContentsConfigure {
     
     func setNib() {
-        let nib = UINib(nibName: "TamagotchiCollectionViewCell", bundle: nil)
-        tamagochiCollectionView.register(nib, forCellWithReuseIdentifier: "TamagotchiCollectionViewCell")
+        let nib = UINib(nibName: CellName.selectTamagoCell.rawValue, bundle: nil)
+        tamagochiCollectionView.register(nib, forCellWithReuseIdentifier: CellName.selectTamagoCell.rawValue)
     }
     
     func cellFlowLayout() {

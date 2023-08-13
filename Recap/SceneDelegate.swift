@@ -21,13 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launched = UserDefaults.standard.bool(forKey: "launched")
         
         if launched == false {
-            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "SelectTamagotchiViewController") as! SelectTamagotchiViewController
             
             window?.rootViewController = vc
         } else {
             
-            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let sb = UIStoryboard(name: StoryboardName.main.rawValue, bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
             let nav = UINavigationController(rootViewController: vc)
             

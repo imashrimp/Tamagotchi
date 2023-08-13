@@ -17,7 +17,8 @@ class MainViewController: UIViewController {
             bubbleTextField.text = sentenceArray.randomElement()
         }
     }
-    
+
+    //이것도 타입 프로퍼티로 두면 좋을 수 있음 근데 여기서만 쓰이니까 따로 둬야하나? 라는 생각도 들고.
     let sentenceArray: [String] = ["아... 배고픔.", "밥 들어오나?", "좀 먹은거 같네.", "아 배부르다.", "고만 먹을란다."]
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
@@ -241,11 +242,15 @@ extension MainViewController {
         self.navigationItem.title = "\(userName)님의 다마고치"
     }
     
+    
     @objc func settingButtonTapped() {
         
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
+        let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
-        navigationController?.pushViewController(vc, animated: true)
+        //MARK: - 타입 캐스팅 바인딩으로
+        let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) as! SettingViewController
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
