@@ -11,6 +11,10 @@ class SettingViewController: UIViewController {
     
     let cellItem = SettingItemlList()
     
+    var tamagoList = TamagotchiList().tamagotchi
+    
+    var tamagotchi = Tamagotchi(id: 0, type: "", name: "", rice: 0, water: 0)
+    
     @IBOutlet var settingTableView: UITableView!
     
     override func viewDidLoad() {
@@ -32,7 +36,11 @@ class SettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        settingTableView.reloadData()
+
+        let index = [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)]
+
+        settingTableView.reloadRows(at: index, with: .none)
+
     }
     
     func setNavBar() {
@@ -61,28 +69,35 @@ extension SettingViewController: UITableViewDelegate {
             
             let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
             
-            let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
-            
-        //1. 넘길때 다마고치 변경화면 설정을 위한 식별자
+           guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+
             vc.mode = .change
             
             navigationController?.pushViewController(vc, animated: true)
             
         } else if indexPath.row == 2 {
 
-            let alert = UIAlertController(title: "데이터 초기화", message: #""확인"버튼을 누르면 데이터가 초기화 됩니다. "#, preferredStyle: .alert)
+            let alert = UIAlertController(title: "데이터 초기화", message: #""확인"버튼을 누르면 데이터가 초기화 됩니다."#, preferredStyle: .alert)
             
             let cancel = UIAlertAction(title: "취소", style: .cancel)
+            
             let okay = UIAlertAction(title: "확인", style: .default) { okay in
+                
                 UserDefaults.standard.set(false, forKey: "launched")
                 
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 
-                let sb = UIStoryboard(name: "Main", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as! SelectTamagotchiViewController
+                let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue , bundle: nil)
+                
+                guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+                
                 let nav = UINavigationController(rootViewController: vc)
+
+                for tamago in self.tamagoList {
+                    Methods.saveTamagotchiStruct(tamagotchi: tamago)
+                }
 
                 sceneDelegate?.window?.rootViewController = nav
                 sceneDelegate?.window?.makeKeyAndVisible()
@@ -103,7 +118,7 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellName.settingCell.rawValue) as! SettingTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellName.settingCell.rawValue) as? SettingTableViewCell else { return UITableViewCell() }
         
         cell.setUIContents(item: cellItem.list[indexPath.row])
         

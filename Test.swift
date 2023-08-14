@@ -19,7 +19,6 @@ struct Methods {
     static func loadTamagotchiStruct(key: Int) -> Tamagotchi {
         
         guard let savedTamagotchiData = UserDefaults.standard.object(forKey: "\(key)") as? Data else {
-            print(#function)
             print("다마고치를 Data 타입으로 불러오는데 실패했습니다!")
             return Tamagotchi(id: 0 ,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
         }

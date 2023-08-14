@@ -5,16 +5,10 @@
 //  Created by 권현석 on 2023/08/04.
 //
 
-//1. 밥, 물을 Int값으로 저장하고, 계산 메서드 내부에서 이를 Double로 타입캐스팅해서 게산 후 double 타입의 level을 Int값으로 타입캐스팅 해서 나타내기
-//2. 밥, 물을 Double값으로 저장하고, 입력값을 Int로 타입 => 이걸 하려면 우선 저장 시에 double이 못 들어가게 해야함. 그리고 계산 시에 레벨을 Int타입으로 캐스팅 해야함. 
-
 import UIKit
 
 class MainViewController: UIViewController {
     
-    //MARK: - id 중복 사용 하지말고 데이터 구조체 내부의 id만 사용해서 해보자.
-    //1. 데이터 전달하는데(selectTamagotchiVC)에서 바꾸기 시작.
-    //2. MainVC에서 사용하는 부분에서 수정
     var myTamagotchiID: Int?
     var myTamagotchi: Tamagotchi = Tamagotchi(id: 0,type: TamagotchiSpecies.none.rawValue, name: "", rice: 0, water: 0)
     var myTamgotchiLevel: Int = 0 {
@@ -23,7 +17,6 @@ class MainViewController: UIViewController {
         }
     }
 
-    //이것도 타입 프로퍼티로 두면 좋을 수 있음 근데 여기서만 쓰이니까 따로 둬야하나? 라는 생각도 들고.
     let sentenceArray: [String] = ["아... 배고픔.", "밥 들어오나?", "좀 먹은거 같네.", "아 배부르다.", "고만 먹을란다."]
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
@@ -66,7 +59,6 @@ class MainViewController: UIViewController {
 
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
         
-        //Sting? -> String -> Int? -> Int => 텍스트필드가 비었을 경우, 데이터를 Int로 타입캐스팅 하면, nil값을 반환하므로 빈 텍스트 필드 상태에서 버튼을 눌렀을 때 값이 1만 올라가는 기능을 guard let 구문 사용 시 {}의 내부에서 해면 됨.
         guard let riceToEatString = riceTextField.text, let riceToEat = Int(riceToEatString) else {
             
             myTamagotchi.rice += 1
@@ -74,6 +66,8 @@ class MainViewController: UIViewController {
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
            
             updateTamagotchi(id: myTamagotchi.id)
+            
+            print("밥양: \(myTamagotchi.rice)")
            
             return
         }
@@ -100,6 +94,8 @@ class MainViewController: UIViewController {
             
             riceTextField.text = ""
             
+            print("밥양: \(myTamagotchi.rice)")
+            
         }
     }
     
@@ -118,6 +114,9 @@ class MainViewController: UIViewController {
             showMyTamagotchiStatement()
             
             Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
+            
+            print("물양: \(myTamagotchi.water)")
+            
             return
         }
         
@@ -142,6 +141,8 @@ class MainViewController: UIViewController {
             Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
                         
             waterTextField.text = ""
+            
+            print("물양: \(myTamagotchi.water)")
         }
     }
     
@@ -195,7 +196,7 @@ class MainViewController: UIViewController {
         let riceDouble = Double(rice)
         let waterDouble = Double(water)
         
-        let levelDouble = ((riceDouble / 5) + (riceDouble / 2)) / 10
+        let levelDouble = ((riceDouble / 5) + (waterDouble / 2)) / 10
         let level = Int(levelDouble)
         if level < 1 {
             myTamgotchiLevel = 1
@@ -242,11 +243,7 @@ extension MainViewController {
         
         let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
-        //MARK: - 타입 캐스팅 바인딩으로
-//        guard let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) else { return }
-//        vc as
-        
-        let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) as! SettingViewController
+        guard let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) as? SettingViewController else { return }
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -74,7 +74,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                 
                 let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                 
-                let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue ) as! PopUpViewController
+                guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue ) as? PopUpViewController else { return }
                 
                 popUpVC.modalPresentationStyle = .overFullScreen
                 
@@ -100,7 +100,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                     
                     let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                     
-                    let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue) as! PopUpViewController
+                    guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue) as? PopUpViewController else { return }
                     
                     popUpVC.modalPresentationStyle = .overFullScreen
                     
@@ -120,10 +120,12 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellName.selectTamagoCell.rawValue, for: indexPath) as! TamagotchiCollectionViewCell
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellName.selectTamagoCell.rawValue, for: indexPath) as? TamagotchiCollectionViewCell else { return UICollectionViewCell() }
         
         if mode == .firstChoice {
             
+            //MARK: - Methods.caculateLevel이거 쓰면 안되나?
             var myTamgotichLevel: Int {
                 return Int(((tamagotchiList[indexPath.row].rice / 5) + (tamagotchiList[indexPath.row].water / 2)) / 10)            }
             

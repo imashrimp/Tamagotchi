@@ -43,11 +43,16 @@ class ChangeUserNameViewController: UIViewController {
     @objc func saveUserName() {
         guard let userName = userNameTextField.text else { return }
         
-        if userName == "" {
+        if userName.count <= 0 {
             
             okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 입력하세요.")
             
+        } else if userName.count > 8 {
+            
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 8글자 이하로 설정하세요.")
+            
         } else {
+            
             let alert = UIAlertController(title: "\"\(userName)\"(으)로 사용자 이름을 설정하겠습니까?", message: #""확인"을 누르면 설정이 완료됩니다."#, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             let okay = UIAlertAction(title: "확인", style: .default) { okay in
@@ -57,11 +62,13 @@ class ChangeUserNameViewController: UIViewController {
             alert.addAction(cancel)
             alert.addAction(okay)
             present(alert, animated: true)
+            
         }
     }
 }
 
 extension ChangeUserNameViewController: UITextFieldDelegate {
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = ""
     }
