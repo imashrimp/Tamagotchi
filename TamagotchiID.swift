@@ -8,6 +8,7 @@
 import Foundation
 
 class TamagoID {
+    
     static let shared = TamagoID()
     
     var id = "ID"

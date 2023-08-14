@@ -41,6 +41,9 @@ class ChangeUserNameViewController: UIViewController {
     }
     
     @objc func saveUserName() {
+        
+        let alert = Alert()
+        
         guard let userName = userNameTextField.text else { return }
         
         if userName.count <= 0 {

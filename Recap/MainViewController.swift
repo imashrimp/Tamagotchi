@@ -243,7 +243,7 @@ extension MainViewController {
         
         let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: VCName.setting.rawValue) as? SettingViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: UIViewController.identifier) as? SettingViewController else { return }
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

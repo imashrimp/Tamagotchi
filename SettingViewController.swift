@@ -61,7 +61,7 @@ extension SettingViewController: UITableViewDelegate {
         if indexPath.row == 0 {
             
             let sb = UIStoryboard(name: StoryboardName.changeUserName.rawValue, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: VCName.ChangeUserName.rawValue)
+            let vc = sb.instantiateViewController(withIdentifier: UIViewController.identifier /*VCName.ChangeUserName.rawValue*/)
             
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -69,7 +69,7 @@ extension SettingViewController: UITableViewDelegate {
             
             let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
             
-           guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+           guard let vc = sb.instantiateViewController(withIdentifier: UIViewController.identifier /*VCName.selectTamagotchi.rawValue*/) as? SelectTamagotchiViewController else { return }
 
             vc.mode = .change
             
@@ -91,7 +91,7 @@ extension SettingViewController: UITableViewDelegate {
                 
                 let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue , bundle: nil)
                 
-                guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+                guard let vc = sb.instantiateViewController(withIdentifier: UIViewController.identifier /*VCName.selectTamagotchi.rawValue*/) as? SelectTamagotchiViewController else { return }
                 
                 let nav = UINavigationController(rootViewController: vc)
 
@@ -118,7 +118,7 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellName.settingCell.rawValue) as? SettingTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier) as? SettingTableViewCell else { return UITableViewCell() }
         
         cell.setUIContents(item: cellItem.list[indexPath.row])
         
