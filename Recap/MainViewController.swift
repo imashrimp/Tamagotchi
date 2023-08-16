@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
             bubbleTextField.text = sentenceArray.randomElement()
         }
     }
-
+    
     let sentenceArray: [String] = ["아... 배고픔.", "밥 들어오나?", "좀 먹은거 같네.", "아 배부르다.", "고만 먹을란다."]
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
@@ -56,19 +56,36 @@ class MainViewController: UIViewController {
         let id = UserDefaults.standard.integer(forKey: TamagoID.shared.id)
         updateTamagotchi(id: id)
     }
-
+    
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
+        
+        //dotrycatch를 하기 전에 에러를 throw할 함수를 정의해야함.
+        //에러를 예상하고 그에 맞는 throw 값을 enum으로 정해야함. 그리고 예상 범위 밖의 에러도 unexpected error로 처리할 수 있어야함.
+        
+        //밥 먹기에서 명확한 에러는 한 가지임. 텍스트필드에 입력한 값이 int 타입으로 바뀌지 않는 경우
+        //그러면 textfield.text를 옵셔널 바인딩을 통해 string타입으로 만들자
+        //그 다음 이를 int타입으로 타입캐스팅 하는 코드를 do 스코프 안에 넣고 try를 타입캐스팅 코드 제일 앞에 붙이자
+        //그 다음 catch 절을 만들어서 "숫자를 입력해주세요"라는 얼럿이 뜨도록 하자.
+        
+        //MARK: - 여기서 부터 읽어라
+        //여기서 빠진게 textfield.isEmpty == true인 경우 밥 +1을 해야함 => 이거는 textfieldDelegate에서 먼저 처리해주면 버튼에서 처리 안해줘도 됨.
+        //해결방법 => try 다음에 넣을 함수를 정의 할 때 이걸 처리하면됨.
+        
+        //        guard let test1 = riceTextField.text, let test2 = Int(test1) else {
+        //              여기서 조건문을 태워서
+        //            throw //여기서 에러 처리
+        //        }
         
         guard let riceToEatString = riceTextField.text, let riceToEat = Int(riceToEatString) else {
             
             myTamagotchi.rice += 1
             
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
-           
+            
             updateTamagotchi(id: myTamagotchi.id)
             
             print("밥양: \(myTamagotchi.rice)")
-           
+            
             return
         }
         
@@ -85,7 +102,7 @@ class MainViewController: UIViewController {
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
-
+            
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
             showMyTamagotchiStatement()
@@ -108,7 +125,7 @@ class MainViewController: UIViewController {
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
-
+            
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
             
             showMyTamagotchiStatement()
@@ -133,13 +150,13 @@ class MainViewController: UIViewController {
             Methods.saveTamagotchiStruct(tamagotchi: myTamagotchi)
             
             myTamagotchi = Methods.loadTamagotchiStruct(key: myTamagotchi.id)
-
+            
             calculateLevel(rice: myTamagotchi.rice, water: myTamagotchi.water)
-
+            
             showMyTamagotchiStatement()
             
             Methods.showTamagotchiImage(imageView: imageView, tamagotchiType: myTamagotchi.type, level: myTamgotchiLevel)
-                        
+            
             waterTextField.text = ""
             
             print("물양: \(myTamagotchi.water)")
@@ -209,18 +226,25 @@ class MainViewController: UIViewController {
 }
 extension MainViewController: UITextFieldDelegate {
     
+    func checkTextType(text: String) throws -> Bool {
+        guard Int(text) != nil else {
+            print("숫자로 바꿀 수 없는 형태")
+            throw TypeCastingError.noIntType
+        }
+        
+        return true
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        //MARK: - 여기도 타입을 Double로 바꿔야함.
-        guard let _ = Int(string) else {
-            
+        do {
+            try checkTextType(text: string)
+            return true
+        } catch {
             okayOnlyAlert(alertTitle: "알림", alertMessage: "숫자만 입력해주세요.")
-            
             textField.text = ""
-            
             return false
         }
-        return true
     }
 }
 
@@ -243,7 +267,7 @@ extension MainViewController {
         
         let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: UIViewController.identifier) as? SettingViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SettingViewController else { return }
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -251,7 +275,7 @@ extension MainViewController {
 
 //MARK: - 기본 UI Attributes 설정 => 이거 extension UIViecontroller를 만들어서 해보자
 extension MainViewController {
-
+    
     func configurebubbleTextField() {
         bubbleTextField.borderStyle = .none
         bubbleTextField.background = UIImage(named: "bubble")

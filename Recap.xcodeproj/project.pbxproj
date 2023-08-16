@@ -38,6 +38,8 @@
 		17F932F32A88BA39000B2472 /* TamagotchiID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F932F22A88BA39000B2472 /* TamagotchiID.swift */; };
 		17F932F52A88C051000B2472 /* VCAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F932F42A88C051000B2472 /* VCAlertExtension.swift */; };
 		17F932FD2A8A5CF2000B2472 /* VCID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F932FC2A8A5CF2000B2472 /* VCID.swift */; };
+		17F933152A8CDEE9000B2472 /* TypeCastingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F933142A8CDEE9000B2472 /* TypeCastingError.swift */; };
+		17F933192A8CE297000B2472 /* AlertSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F933182A8CE297000B2472 /* AlertSingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		17F932F22A88BA39000B2472 /* TamagotchiID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiID.swift; sourceTree = SOURCE_ROOT; };
 		17F932F42A88C051000B2472 /* VCAlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAlertExtension.swift; sourceTree = "<group>"; };
 		17F932FC2A8A5CF2000B2472 /* VCID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCID.swift; sourceTree = SOURCE_ROOT; };
+		17F933142A8CDEE9000B2472 /* TypeCastingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCastingError.swift; sourceTree = SOURCE_ROOT; };
+		17F933182A8CE297000B2472 /* AlertSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +110,9 @@
 		17BE436E2A7CCF420072FEA7 /* Recap */ = {
 			isa = PBXGroup;
 			children = (
+				17F933142A8CDEE9000B2472 /* TypeCastingError.swift */,
 				17F932FC2A8A5CF2000B2472 /* VCID.swift */,
+				17F933182A8CE297000B2472 /* AlertSingleton.swift */,
 				17F932F22A88BA39000B2472 /* TamagotchiID.swift */,
 				17F932EF2A88836E000B2472 /* FileName */,
 				17BE43B02A7F20550072FEA7 /* TamagotchiMethods.swift */,
@@ -295,6 +301,7 @@
 				17F932F52A88C051000B2472 /* VCAlertExtension.swift in Sources */,
 				17F932F32A88BA39000B2472 /* TamagotchiID.swift in Sources */,
 				17F932EE2A888104000B2472 /* CellName.swift in Sources */,
+				17F933152A8CDEE9000B2472 /* TypeCastingError.swift in Sources */,
 				17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */,
 				17BE43942A7CEC5A0072FEA7 /* AssetSingleton.swift in Sources */,
 				17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */,
@@ -305,6 +312,7 @@
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,
 				17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */,
 				17BE43A62A7D31C20072FEA7 /* SettingTableViewCell.swift in Sources */,
+				17F933192A8CE297000B2472 /* AlertSingleton.swift in Sources */,
 				17BE43842A7CDD2F0072FEA7 /* SelectTamagotchiViewController.swift in Sources */,
 				17BE438A2A7CE2850072FEA7 /* Protocol.swift in Sources */,
 				17BE439E2A7D198E0072FEA7 /* MainViewController.swift in Sources */,

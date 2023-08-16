@@ -74,7 +74,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                 
                 let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                 
-                guard let popUpVC = sb.instantiateViewController(withIdentifier: UIViewController.identifier ) as? PopUpViewController else { return }
+                guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue ) as? PopUpViewController else { return }
                 
                 popUpVC.modalPresentationStyle = .overFullScreen
                 
@@ -100,7 +100,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                     
                     let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                     
-                    guard let popUpVC = sb.instantiateViewController(withIdentifier: UIViewController.identifier) as? PopUpViewController else { return }
+                    guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue) as? PopUpViewController else { return }
                     
                     popUpVC.modalPresentationStyle = .overFullScreen
                     
