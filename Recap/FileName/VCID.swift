@@ -16,7 +16,6 @@ extension UIViewController: ResuableProtocol {
     static var identifier: String {
         String(describing: self)
     }
-    
 }
 
 extension UICollectionViewCell: ResuableProtocol {

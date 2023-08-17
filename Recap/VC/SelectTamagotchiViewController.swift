@@ -68,13 +68,13 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
             if tamagotchiList[indexPath.row].type == TamagotchiSpecies.none.rawValue {
                 
-                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
+                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.", buttonTitle: "확인")
                 
             } else {
                 
                 let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                 
-                guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue ) as? PopUpViewController else { return }
+                guard let popUpVC = sb.instantiateViewController(withIdentifier: PopUpViewController.identifier) as? PopUpViewController else { return }
                 
                 popUpVC.modalPresentationStyle = .overFullScreen
                 
@@ -86,7 +86,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
             
             if tamagotchiList[indexPath.row].type == TamagotchiSpecies.none.rawValue {
                 
-                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
+                okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.", buttonTitle: "확인")
                 
             } else {
                 // 여기가 안됨
@@ -94,13 +94,13 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                 //그렇다면 이 시점 이전에 UserDefaults에 "ID"라는 키로 저장된 값이 있음. 이걸 찾아라 => popUp에 전달된 값에서 "ID"값을 저장함.
                 if tamagotchiList[indexPath.row].id == UserDefaults.standard.integer(forKey: TamagoID.shared.id) {
                     
-                    okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.")
+                    okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.", buttonTitle: "확인")
                     
                 } else {
                     
                     let sb = UIStoryboard(name: StoryboardName.popUp.rawValue, bundle: nil)
                     
-                    guard let popUpVC = sb.instantiateViewController(withIdentifier: VCName.PopUp.rawValue) as? PopUpViewController else { return }
+                    guard let popUpVC = sb.instantiateViewController(withIdentifier: PopUpViewController.identifier) as? PopUpViewController else { return }
                     
                     popUpVC.modalPresentationStyle = .overFullScreen
                     
@@ -121,7 +121,7 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellName.selectTamagoCell.rawValue, for: indexPath) as? TamagotchiCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TamagotchiCollectionViewCell.identifier, for: indexPath) as? TamagotchiCollectionViewCell else { return UICollectionViewCell() }
         
         if mode == .firstChoice {
             
@@ -154,8 +154,8 @@ extension SelectTamagotchiViewController: UICollectionViewDataSource {
 extension SelectTamagotchiViewController: CollectionCellContentsConfigure {
     
     func setNib() {
-        let nib = UINib(nibName: CellName.selectTamagoCell.rawValue, bundle: nil)
-        tamagochiCollectionView.register(nib, forCellWithReuseIdentifier: CellName.selectTamagoCell.rawValue)
+        let nib = UINib(nibName: TamagotchiCollectionViewCell.identifier, bundle: nil)
+        tamagochiCollectionView.register(nib, forCellWithReuseIdentifier: TamagotchiCollectionViewCell.identifier)
     }
     
     func cellFlowLayout() {

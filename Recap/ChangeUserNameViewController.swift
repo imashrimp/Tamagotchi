@@ -47,14 +47,12 @@ class ChangeUserNameViewController: UIViewController {
         guard let userName = userNameTextField.text else { return }
         
         if userName.count <= 0 {
-
-//            AlertTest.shared.oneButtonAlert(title: <#T##String#>, alertMessage: <#T##String#>, actionTitle: <#T##String#>, actionStyle: <#T##UIAlertAction.Style#>, test: <#T##(UIViewController) -> ()#>)
             
-//            okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 입력하세요.")
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 입력하세요.", buttonTitle: "확인")
             
         } else if userName.count > 8 {
             
-            okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 8글자 이하로 설정하세요.")
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 8글자 이하로 설정하세요.", buttonTitle: "확인")
             
         } else {
             

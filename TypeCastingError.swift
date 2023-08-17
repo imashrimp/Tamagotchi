@@ -10,3 +10,8 @@ import Foundation
 enum TypeCastingError: Error {
     case noIntType
 }
+
+enum RiceCountError: Error {
+    case oneMoreRice
+    case tooMuchRice
+}

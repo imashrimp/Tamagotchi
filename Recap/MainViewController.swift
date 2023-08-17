@@ -57,26 +57,28 @@ class MainViewController: UIViewController {
         updateTamagotchi(id: id)
     }
     
+
+    //MARK: - 보류 조건 넣기가 빡셈
+//    func checkRiceCount(text: String) throws {
+//
+//        guard text.isEmpty != nil else {
+//            print("텍스트필드가 비었으니 밥양을 1만 올려라")
+//            throw RiceCountError.oneMoreRice
+//        }
+//
+//        guard let count = Int(text) else { return }
+//
+//        guard count < 100 else {
+//            print("밥은 한 번에 최대 99개 까지만")
+//            throw RiceCountError.tooMuchRice
+//        }
+//
+//    }
+    
     @IBAction func eatRiceButtonTapped(_ sender: UIButton) {
         
-        //dotrycatch를 하기 전에 에러를 throw할 함수를 정의해야함.
-        //에러를 예상하고 그에 맞는 throw 값을 enum으로 정해야함. 그리고 예상 범위 밖의 에러도 unexpected error로 처리할 수 있어야함.
-        
-        //밥 먹기에서 명확한 에러는 한 가지임. 텍스트필드에 입력한 값이 int 타입으로 바뀌지 않는 경우
-        //그러면 textfield.text를 옵셔널 바인딩을 통해 string타입으로 만들자
-        //그 다음 이를 int타입으로 타입캐스팅 하는 코드를 do 스코프 안에 넣고 try를 타입캐스팅 코드 제일 앞에 붙이자
-        //그 다음 catch 절을 만들어서 "숫자를 입력해주세요"라는 얼럿이 뜨도록 하자.
-        
-        //MARK: - 여기서 부터 읽어라
-        //여기서 빠진게 textfield.isEmpty == true인 경우 밥 +1을 해야함 => 이거는 textfieldDelegate에서 먼저 처리해주면 버튼에서 처리 안해줘도 됨.
-        //해결방법 => try 다음에 넣을 함수를 정의 할 때 이걸 처리하면됨.
-        
-        //        guard let test1 = riceTextField.text, let test2 = Int(test1) else {
-        //              여기서 조건문을 태워서
-        //            throw //여기서 에러 처리
-        //        }
-        
         guard let riceToEatString = riceTextField.text, let riceToEat = Int(riceToEatString) else {
+            
             
             myTamagotchi.rice += 1
             
@@ -91,7 +93,7 @@ class MainViewController: UIViewController {
         
         if riceToEat >= 100 {
             
-            okayOnlyAlert(alertTitle: "알림", alertMessage: "밥은 한 번에 99개 까지 줄 수 있습니다.")
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "밥은 한 번에 99개 까지 줄 수 있습니다.", buttonTitle: "확인")
             
             riceTextField.text = ""
             
@@ -139,7 +141,7 @@ class MainViewController: UIViewController {
         
         if waterToDrink >= 50 {
             
-            okayOnlyAlert(alertTitle: "알림", alertMessage: "물은 한 번에 49개 까지 줄 수 있습니다.")
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "물은 한 번에 49개 까지 줄 수 있습니다.", buttonTitle: "확인")
             
             waterTextField.text = ""
             
@@ -226,22 +228,21 @@ class MainViewController: UIViewController {
 }
 extension MainViewController: UITextFieldDelegate {
     
-    func checkTextType(text: String) throws -> Bool {
+    func checkTextType(text: String) throws {
         guard Int(text) != nil else {
             print("숫자로 바꿀 수 없는 형태")
             throw TypeCastingError.noIntType
         }
         
-        return true
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         do {
             try checkTextType(text: string)
             return true
         } catch {
-            okayOnlyAlert(alertTitle: "알림", alertMessage: "숫자만 입력해주세요.")
+            okayOnlyAlert(alertTitle: "알림", alertMessage: "숫자만 입력해주세요.", buttonTitle: "확인")
             textField.text = ""
             return false
         }
@@ -264,10 +265,12 @@ extension MainViewController {
     
     
     @objc func settingButtonTapped() {
-        
+
         let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SettingViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: SettingViewController.identifier) as? SettingViewController else {
+            
+            return }
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

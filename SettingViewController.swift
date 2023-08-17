@@ -30,8 +30,8 @@ class SettingViewController: UIViewController {
         
         settingTableView.rowHeight = 70
         
-        let nib = UINib(nibName: CellName.settingCell.rawValue, bundle: nil)
-        settingTableView.register(nib, forCellReuseIdentifier: CellName.settingCell.rawValue)
+        let nib = UINib(nibName: SettingTableViewCell.identifier, bundle: nil)
+        settingTableView.register(nib, forCellReuseIdentifier: SettingTableViewCell.identifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +61,7 @@ extension SettingViewController: UITableViewDelegate {
         if indexPath.row == 0 {
             
             let sb = UIStoryboard(name: StoryboardName.changeUserName.rawValue, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: VCName.ChangeUserName.rawValue)
+            let vc = sb.instantiateViewController(withIdentifier: ChangeUserNameViewController.identifier)
             
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -69,7 +69,7 @@ extension SettingViewController: UITableViewDelegate {
             
             let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
             
-           guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+            guard let vc = sb.instantiateViewController(withIdentifier: SelectTamagotchiViewController.identifier) as? SelectTamagotchiViewController else { return }
 
             vc.mode = .change
             
@@ -91,7 +91,7 @@ extension SettingViewController: UITableViewDelegate {
                 
                 let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue , bundle: nil)
                 
-                guard let vc = sb.instantiateViewController(withIdentifier: VCName.selectTamagotchi.rawValue) as? SelectTamagotchiViewController else { return }
+                guard let vc = sb.instantiateViewController(withIdentifier: SelectTamagotchiViewController.identifier) as? SelectTamagotchiViewController else { return }
                 
                 let nav = UINavigationController(rootViewController: vc)
 
@@ -114,11 +114,14 @@ extension SettingViewController: UITableViewDelegate {
 
 extension SettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return cellItem.list.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier) as? SettingTableViewCell else { return UITableViewCell() }
+        //MARK: - 익스텐션에서 테이블뷰셀, 컬렉션뷰 셀 아이덴티파이어 만들기 
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier) as? SettingTableViewCell else { return UITableViewCell() }
         
         cell.setUIContents(item: cellItem.list[indexPath.row])
         

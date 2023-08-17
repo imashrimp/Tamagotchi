@@ -49,7 +49,7 @@ class PopUpViewController: UIViewController {
         
         let sb = UIStoryboard(name: StoryboardName.main.rawValue, bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: VCName.main.rawValue) as? MainViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: MainViewController.identifier) as? MainViewController else { return }
         
         let nav = UINavigationController(rootViewController: vc)
 
