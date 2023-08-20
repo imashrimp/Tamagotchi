@@ -8,6 +8,7 @@
 import UIKit
 
 struct Methods {
+    
     static func saveTamagotchiStruct(tamagotchi: Tamagotchi) {
         let encoder = JSONEncoder()
         

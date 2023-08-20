@@ -52,6 +52,8 @@ class PopUpViewController: UIViewController {
         guard let vc = sb.instantiateViewController(withIdentifier: MainViewController.identifier) as? MainViewController else { return }
         
         let nav = UINavigationController(rootViewController: vc)
+        
+        FeedNotification.shared.notifyToFeed()
 
         UserDefaults.standard.set(selectedTamago.id, forKey: TamagoID.shared.id)
         vc.myTamagotchiID = selectedTamago.id
@@ -111,4 +113,6 @@ class PopUpViewController: UIViewController {
         }
         
     }
+    
+    
 }
