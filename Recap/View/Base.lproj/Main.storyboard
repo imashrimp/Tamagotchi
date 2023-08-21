@@ -60,13 +60,24 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yio-9K-olt">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yio-9K-olt" customClass="EatButton" customModule="Recap" customModuleProvider="target">
                                         <rect key="frame" x="135" y="0.0" width="100" height="34.333333333333336"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="SAX-gY-SpU"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.92347434770000003" green="1" blue="0.44756383119999998" alpha="0.60288182950000002" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="eatRiceButtonTapped:" destination="Qig-YB-Mr0" eventType="touchUpInside" id="8Ce-7I-UQ6"/>
                                         </connections>
@@ -92,7 +103,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulN-bc-Owy">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulN-bc-Owy" customClass="DrinkButton" customModule="Recap" customModuleProvider="target">
                                         <rect key="frame" x="135" y="0.0" width="100" height="34.333333333333336"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="RLx-1G-TRf"/>
@@ -176,6 +187,14 @@
             <point key="canvasLocation" x="-106.10687022900763" y="-6.3380281690140849"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="Yio-9K-olt">
+            <size key="intrinsicContentSize" width="75" height="34.333333333333336"/>
+        </designable>
+        <designable name="ulN-bc-Owy">
+            <size key="intrinsicContentSize" width="75" height="34.333333333333336"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

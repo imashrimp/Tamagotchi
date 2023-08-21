@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17084D242A934EEF004AEB80 /* OKAYButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17084D232A934EEF004AEB80 /* OKAYButton.swift */; };
+		17376E7E2A93563600AE158D /* DrinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17376E7D2A93563600AE158D /* DrinkButton.swift */; };
 		173B67002A7F501A00B9928F /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 173B66FF2A7F501A00B9928F /* IQKeyboardManagerSwift */; };
 		1789FF212A91A3F50065C0E6 /* FeedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1789FF202A91A3F50065C0E6 /* FeedNotification.swift */; };
 		17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17084D232A934EEF004AEB80 /* OKAYButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OKAYButton.swift; path = View/OKAYButton.swift; sourceTree = "<group>"; };
+		17376E7D2A93563600AE158D /* DrinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkButton.swift; sourceTree = SOURCE_ROOT; };
 		1789FF202A91A3F50065C0E6 /* FeedNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNotification.swift; sourceTree = "<group>"; };
 		17BE436C2A7CCF420072FEA7 /* Recap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17BE436F2A7CCF420072FEA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 		17BE436E2A7CCF420072FEA7 /* Recap */ = {
 			isa = PBXGroup;
 			children = (
+				17376E7D2A93563600AE158D /* DrinkButton.swift */,
+				17084D232A934EEF004AEB80 /* OKAYButton.swift */,
 				17F933142A8CDEE9000B2472 /* TypeCastingError.swift */,
 				17F932F22A88BA39000B2472 /* TamagotchiID.swift */,
 				17F932EF2A88836E000B2472 /* FileName */,
@@ -294,6 +300,7 @@
 				17BE43B12A7F20550072FEA7 /* TamagotchiMethods.swift in Sources */,
 				17F932F52A88C051000B2472 /* VCAlertExtension.swift in Sources */,
 				17F932F32A88BA39000B2472 /* TamagotchiID.swift in Sources */,
+				17084D242A934EEF004AEB80 /* OKAYButton.swift in Sources */,
 				17F933152A8CDEE9000B2472 /* TypeCastingError.swift in Sources */,
 				17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */,
 				17BE43942A7CEC5A0072FEA7 /* AssetSingleton.swift in Sources */,
@@ -304,6 +311,7 @@
 				17F932E42A887878000B2472 /* StoryboardName.swift in Sources */,
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,
 				17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */,
+				17376E7E2A93563600AE158D /* DrinkButton.swift in Sources */,
 				17BE43A62A7D31C20072FEA7 /* SettingTableViewCell.swift in Sources */,
 				17BE43842A7CDD2F0072FEA7 /* SelectTamagotchiViewController.swift in Sources */,
 				1789FF212A91A3F50065C0E6 /* FeedNotification.swift in Sources */,
