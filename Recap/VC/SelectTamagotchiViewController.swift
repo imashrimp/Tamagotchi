@@ -89,9 +89,7 @@ extension SelectTamagotchiViewController: UICollectionViewDelegate {
                 okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.", buttonTitle: "확인")
                 
             } else {
-                // 여기가 안됨
-                //다마고치 데이터 모델이 갖고 있는 id와 UserDefaults에서 갖고 있는 id가 같으면 얼럿을 띄운다
-                //그렇다면 이 시점 이전에 UserDefaults에 "ID"라는 키로 저장된 값이 있음. 이걸 찾아라 => popUp에 전달된 값에서 "ID"값을 저장함.
+                
                 if tamagotchiList[indexPath.row].id == UserDefaults.standard.integer(forKey: TamagoID.shared.id) {
                     
                     okayOnlyAlert(alertTitle: "알림", alertMessage: "다마고치가 준비되지 않았습니다.", buttonTitle: "확인")

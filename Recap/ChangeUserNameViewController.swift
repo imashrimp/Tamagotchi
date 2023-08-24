@@ -55,7 +55,7 @@ class ChangeUserNameViewController: UIViewController {
             okayOnlyAlert(alertTitle: "알림", alertMessage: "사용자 이름을 8글자 이하로 설정하세요.", buttonTitle: "확인")
             
         } else {
-            
+        //MARK: - extension에 인스턴스 메서드로 기능 추가하기 => 이스케이핑 클로저 사용하면 할 수 있음.
             let alert = UIAlertController(title: "\"\(userName)\"(으)로 사용자 이름을 설정하겠습니까?", message: #""확인"을 누르면 설정이 완료됩니다."#, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             let okay = UIAlertAction(title: "확인", style: .default) { okay in

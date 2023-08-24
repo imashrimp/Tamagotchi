@@ -59,24 +59,16 @@ extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            
-            let sb = UIStoryboard(name: StoryboardName.changeUserName.rawValue, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: ChangeUserNameViewController.identifier)
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+    
+            transition(vc: ChangeUserNameViewController.self, storyBoard: StoryboardName.changeUserName.rawValue, transitionStyle: .push)
             
         } else if indexPath.row == 1 {
             
-            let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
-            
-            guard let vc = sb.instantiateViewController(withIdentifier: SelectTamagotchiViewController.identifier) as? SelectTamagotchiViewController else { return }
-
-            vc.mode = .change
-            
-            navigationController?.pushViewController(vc, animated: true)
+            transition(vc: SelectTamagotchiViewController.self, storyBoard: StoryboardName.selectTamagotchi.rawValue, transitionStyle: .push)
             
         } else if indexPath.row == 2 {
 
+            //MARK: - 익스텐션의 인스턴스 메서드로 기능을 추가해서 코드를 간략하게 해보자
             let alert = UIAlertController(title: "데이터 초기화", message: #""확인"버튼을 누르면 데이터가 초기화 됩니다."#, preferredStyle: .alert)
             
             let cancel = UIAlertAction(title: "취소", style: .cancel)

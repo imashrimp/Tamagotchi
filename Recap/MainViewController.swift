@@ -265,14 +265,7 @@ extension MainViewController {
     
     
     @objc func settingButtonTapped() {
-
-        let sb = UIStoryboard(name: StoryboardName.setting.rawValue, bundle: nil)
-        
-        guard let vc = sb.instantiateViewController(withIdentifier: SettingViewController.identifier) as? SettingViewController else {
-            
-            return }
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        transition(vc: SettingViewController.self, storyBoard: StoryboardName.setting.rawValue, transitionStyle: .push)
     }
 }
 

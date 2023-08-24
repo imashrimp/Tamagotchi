@@ -30,6 +30,8 @@
 		17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */; };
 		17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */; };
 		17BE43B12A7F20550072FEA7 /* TamagotchiMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43B02A7F20550072FEA7 /* TamagotchiMethods.swift */; };
+		17C402BA2A976A1F00265007 /* Transition+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C402B92A976A1F00265007 /* Transition+Extension.swift */; };
+		17C402BC2A976B7D00265007 /* TransitionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C402BB2A976B7D00265007 /* TransitionStyle.swift */; };
 		17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */; };
 		17F932E12A8876E9000B2472 /* SelectTamagotchi.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17F932E02A8876E9000B2472 /* SelectTamagotchi.storyboard */; };
 		17F932E42A887878000B2472 /* StoryboardName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F932E32A887878000B2472 /* StoryboardName.swift */; };
@@ -67,6 +69,8 @@
 		17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameViewController.swift; sourceTree = "<group>"; };
 		17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTamagochiMode.swift; sourceTree = "<group>"; };
 		17BE43B02A7F20550072FEA7 /* TamagotchiMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiMethods.swift; sourceTree = SOURCE_ROOT; };
+		17C402B92A976A1F00265007 /* Transition+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transition+Extension.swift"; sourceTree = "<group>"; };
+		17C402BB2A976B7D00265007 /* TransitionStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionStyle.swift; sourceTree = "<group>"; };
 		17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		17F932E02A8876E9000B2472 /* SelectTamagotchi.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectTamagotchi.storyboard; sourceTree = "<group>"; };
 		17F932E32A887878000B2472 /* StoryboardName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardName.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				17BE437D2A7CCF430072FEA7 /* Info.plist */,
 				17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */,
 				1789FF202A91A3F50065C0E6 /* FeedNotification.swift */,
+				17C402BD2A976B8400265007 /* Transition */,
 			);
 			path = Recap;
 			sourceTree = "<group>";
@@ -188,6 +193,15 @@
 			children = (
 			);
 			name = "New Group";
+			sourceTree = "<group>";
+		};
+		17C402BD2A976B8400265007 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				17C402B92A976A1F00265007 /* Transition+Extension.swift */,
+				17C402BB2A976B7D00265007 /* TransitionStyle.swift */,
+			);
+			path = Transition;
 			sourceTree = "<group>";
 		};
 		17F932E22A8876F3000B2472 /* View */ = {
@@ -295,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C402BA2A976A1F00265007 /* Transition+Extension.swift in Sources */,
 				17BE43A92A7D343E0072FEA7 /* SettingModel.swift in Sources */,
 				17BE438C2A7CE37B0072FEA7 /* TamagotchiModel.swift in Sources */,
 				17BE43B12A7F20550072FEA7 /* TamagotchiMethods.swift in Sources */,
@@ -305,6 +320,7 @@
 				17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */,
 				17BE43942A7CEC5A0072FEA7 /* AssetSingleton.swift in Sources */,
 				17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */,
+				17C402BC2A976B7D00265007 /* TransitionStyle.swift in Sources */,
 				17BE43872A7CDDC90072FEA7 /* TamagotchiCollectionViewCell.swift in Sources */,
 				17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */,
 				17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */,
