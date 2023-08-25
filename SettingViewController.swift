@@ -36,11 +36,11 @@ class SettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         let index = [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)]
-
+        
         settingTableView.reloadRows(at: index, with: .none)
-
+        
     }
     
     func setNavBar() {
@@ -59,15 +59,21 @@ extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-    
+            
             transition(vc: ChangeUserNameViewController.self, storyBoard: StoryboardName.changeUserName.rawValue, transitionStyle: .push)
             
         } else if indexPath.row == 1 {
             
-            transition(vc: SelectTamagotchiViewController.self, storyBoard: StoryboardName.selectTamagotchi.rawValue, transitionStyle: .push)
+            let sb = UIStoryboard(name: StoryboardName.selectTamagotchi.rawValue, bundle: nil)
+            
+            guard let vc = sb.instantiateViewController(withIdentifier: SelectTamagotchiViewController.identifier) as? SelectTamagotchiViewController else { return }
+            
+            vc.mode = .change
+            
+            navigationController?.pushViewController(vc, animated: true)
             
         } else if indexPath.row == 2 {
-
+            
             //MARK: - 익스텐션의 인스턴스 메서드로 기능을 추가해서 코드를 간략하게 해보자
             let alert = UIAlertController(title: "데이터 초기화", message: #""확인"버튼을 누르면 데이터가 초기화 됩니다."#, preferredStyle: .alert)
             
@@ -86,11 +92,11 @@ extension SettingViewController: UITableViewDelegate {
                 guard let vc = sb.instantiateViewController(withIdentifier: SelectTamagotchiViewController.identifier) as? SelectTamagotchiViewController else { return }
                 
                 let nav = UINavigationController(rootViewController: vc)
-
+                
                 for tamago in self.tamagoList {
                     Methods.saveTamagotchiStruct(tamagotchi: tamago)
                 }
-
+                
                 sceneDelegate?.window?.rootViewController = nav
                 sceneDelegate?.window?.makeKeyAndVisible()
             }
@@ -112,7 +118,7 @@ extension SettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //MARK: - 익스텐션에서 테이블뷰셀, 컬렉션뷰 셀 아이덴티파이어 만들기 
+        //MARK: - 익스텐션에서 테이블뷰셀, 컬렉션뷰 셀 아이덴티파이어 만들기
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier) as? SettingTableViewCell else { return UITableViewCell() }
         
         cell.setUIContents(item: cellItem.list[indexPath.row])
