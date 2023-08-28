@@ -15,6 +15,10 @@ class SettingViewController: UIViewController {
     
     var tamagotchi = Tamagotchi(id: 0, type: "", name: "", rice: 0, water: 0)
     
+    var notificationUserName: String?
+    
+    var notificationState: NotificatioinCenterState = .none
+    
     @IBOutlet var settingTableView: UITableView!
     
     override func viewDidLoad() {
@@ -32,15 +36,30 @@ class SettingViewController: UIViewController {
         
         let nib = UINib(nibName: SettingTableViewCell.identifier, bundle: nil)
         settingTableView.register(nib, forCellReuseIdentifier: SettingTableViewCell.identifier)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(userNameNotification), name: NSNotification.Name("UserName"), object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let index = [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)]
-        
-        settingTableView.reloadRows(at: index, with: .none)
-        
+    
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        let index = [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)]
+//
+//        settingTableView.reloadRows(at: index, with: .none)
+//
+//    }
+    
+    @objc func userNameNotification(notification: NSNotification) {
+        //여기서 전달받은 값을 프로퍼티에 할당하고, 테이블뷰 셀을 리로드하면 됨
+        if let userName = notification.userInfo?["userName"] as? String {
+            notificationState = .post
+            notificationUserName = userName
+            let index = [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)]
+            
+            settingTableView.reloadRows(at: index, with: .none)
+        }
     }
     
     func setNavBar() {
@@ -125,10 +144,15 @@ extension SettingViewController: UITableViewDataSource {
         
         if indexPath.row == 0 {
             
-            if let userName = UserDefaults.standard.string(forKey: "userName") {
-                cell.cellSubTitleLabel.text = userName
-            } else {
-                cell.cellSubTitleLabel.text = "사용자 이름"
+            switch notificationState {
+            case .post:
+                cell.cellSubTitleLabel.text = notificationUserName
+            case .none:
+                if let userName = UserDefaults.standard.string(forKey: "userName") {
+                    cell.cellSubTitleLabel.text = userName
+                } else {
+                    cell.cellSubTitleLabel.text = "사용자 이름"
+                }
             }
         } else {
             cell.cellSubTitleLabel.text = ""

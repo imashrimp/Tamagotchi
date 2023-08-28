@@ -30,6 +30,7 @@
 		17BE43AB2A7E08600072FEA7 /* ChangeUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */; };
 		17BE43AD2A7E6C020072FEA7 /* SelectTamagochiMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */; };
 		17BE43B12A7F20550072FEA7 /* TamagotchiMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BE43B02A7F20550072FEA7 /* TamagotchiMethods.swift */; };
+		17C138292A9CFE1700D318B0 /* NotificatioinCenterStateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C138282A9CFE1700D318B0 /* NotificatioinCenterStateEnum.swift */; };
 		17C402BA2A976A1F00265007 /* Transition+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C402B92A976A1F00265007 /* Transition+Extension.swift */; };
 		17C402BC2A976B7D00265007 /* TransitionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C402BB2A976B7D00265007 /* TransitionStyle.swift */; };
 		17DD8A8F2A80E7EA000E77AC /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */; };
@@ -69,6 +70,7 @@
 		17BE43AA2A7E08600072FEA7 /* ChangeUserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameViewController.swift; sourceTree = "<group>"; };
 		17BE43AC2A7E6C020072FEA7 /* SelectTamagochiMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTamagochiMode.swift; sourceTree = "<group>"; };
 		17BE43B02A7F20550072FEA7 /* TamagotchiMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiMethods.swift; sourceTree = SOURCE_ROOT; };
+		17C138282A9CFE1700D318B0 /* NotificatioinCenterStateEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificatioinCenterStateEnum.swift; sourceTree = "<group>"; };
 		17C402B92A976A1F00265007 /* Transition+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transition+Extension.swift"; sourceTree = "<group>"; };
 		17C402BB2A976B7D00265007 /* TransitionStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionStyle.swift; sourceTree = "<group>"; };
 		17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				17DD8A8E2A80E7EA000E77AC /* PopUpViewController.swift */,
 				1789FF202A91A3F50065C0E6 /* FeedNotification.swift */,
 				17C402BD2A976B8400265007 /* Transition */,
+				17C138282A9CFE1700D318B0 /* NotificatioinCenterStateEnum.swift */,
 			);
 			path = Recap;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				17C402BC2A976B7D00265007 /* TransitionStyle.swift in Sources */,
 				17BE43872A7CDDC90072FEA7 /* TamagotchiCollectionViewCell.swift in Sources */,
 				17BE43702A7CCF420072FEA7 /* AppDelegate.swift in Sources */,
+				17C138292A9CFE1700D318B0 /* NotificatioinCenterStateEnum.swift in Sources */,
 				17BE43722A7CCF420072FEA7 /* SceneDelegate.swift in Sources */,
 				17F932E42A887878000B2472 /* StoryboardName.swift in Sources */,
 				17BE43A32A7D30730072FEA7 /* SettingViewController.swift in Sources */,

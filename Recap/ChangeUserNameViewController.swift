@@ -39,11 +39,10 @@ class ChangeUserNameViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveUserName))
     }
-    
+
+    //MARK: - 여기서 post 만들면 됨
     @objc func saveUserName() {
-        
-//        let alert = Alert()
-        
+
         guard let userName = userNameTextField.text else { return }
         
         if userName.count <= 0 {
@@ -59,6 +58,9 @@ class ChangeUserNameViewController: UIViewController {
             let alert = UIAlertController(title: "\"\(userName)\"(으)로 사용자 이름을 설정하겠습니까?", message: #""확인"을 누르면 설정이 완료됩니다."#, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             let okay = UIAlertAction(title: "확인", style: .default) { okay in
+                
+                NotificationCenter.default.post(name: NSNotification.Name("UserName"), object: nil, userInfo: ["userName": userName])
+                
                 UserDefaults.standard.set(userName, forKey: "userName")
                 self.navigationController?.popViewController(animated: true)
             }

@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     }
     
     let sentenceArray: [String] = ["아... 배고픔.", "밥 들어오나?", "좀 먹은거 같네.", "아 배부르다.", "고만 먹을란다."]
+    var notifiedUserName: String?
     
     let settingButton: UIBarButtonItem = UIBarButtonItem()
     
@@ -45,16 +46,25 @@ class MainViewController: UIViewController {
         configureFeedTextField(textField: waterTextField, placeholder: "물줘", tag: 1)
         configureButton(button: eatRiceButton, buttonImage: "leaf.circle", buttonTitle: "밥 먹기")
         configureButton(button: drinkWaterButton, buttonImage: "drop.circle", buttonTitle: "물 먹기")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showUserNameByNotifiaction), name: NSNotification.Name("UserName"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBar()
-        
+        setNavTitle(userName: notifiedUserName)
         loadTamagochiData()
         
         let id = UserDefaults.standard.integer(forKey: TamagoID.shared.id)
         updateTamagotchi(id: id)
+    }
+    
+    @objc func showUserNameByNotifiaction(notification: NSNotification) {
+        if let newUserName = notification.userInfo?["userName"] as? String {
+            notifiedUserName = newUserName
+            setNavTitle(userName: notifiedUserName)
+        }
     }
     
 
@@ -252,15 +262,27 @@ extension MainViewController: UITextFieldDelegate {
 //MARK: - 네비게이션바 설정
 extension MainViewController {
     
+    //MARK: - 여기서 옵저버 추가하면 됨 그리고 분기처리 해야함. 데이터 전달 받는게 없으면 "대장님"으로 되도록
+    func setNavTitle(userName: String?) {
+    
+        if let name = userName {
+            
+            self.navigationItem.title = "\(name)님의 다마고치"
+            
+        } else {
+            guard let userName = UserDefaults.standard.string(forKey: "userName") else {
+                return self.navigationItem.title = "대장님의 다마고치"
+            }
+            
+            self.navigationItem.title = "\(userName)님의 다마고치"
+
+        }
+        
+    }
+    
     func setNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(settingButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = Design.fontAndBorderColor
-        
-        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
-            return self.navigationItem.title = "대장님의 다마고치"
-        }
-        
-        self.navigationItem.title = "\(userName)님의 다마고치"
     }
     
     
